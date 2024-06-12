@@ -13,16 +13,16 @@ always @( *) begin
     // 0011 multiplication
     // 0100 division
     0101 : alu_out <= operand_1 + 1; // increment 
-    0110 : alu_out <= operand_1 - 1;
-    0111 : alu_out <= operand_1 & operand_2;
-    1000 : alu_out <= operand_1 | operand_2;
-    1001 : alu_out <= ~operand_1;
-    1010 : alu_out <= operand_1 ^ operand_2;
-    1011 : alu_out <= operand_1 ;
-    1100 : alu_out <= operand_1 ;
-    1101 : alu_out <= operand_1 ;
-    1110 : alu_out <= operand_1 ;
-    1111 : alu_out <= 16'bx;
+    0110 : alu_out <= operand_1 - 1; // decrement
+    0111 : alu_out <= operand_1 & operand_2; // AND
+    1000 : alu_out <= operand_1 | operand_2; // OR
+    1001 : alu_out <= ~operand_1; // NOT
+    1010 : alu_out <= operand_1 ^ operand_2; // XOR
+    1011 : alu_out <= operand_1 ; // load
+    1100 : alu_out <= operand_1 ; // load
+    1101 : alu_out <= operand_1 ; // jump
+    1110 : alu_out <= operand_1 ; // branch
+    1111 : alu_out <= 16'bx; // halt
     endcase
 end
 endmodule //alu
