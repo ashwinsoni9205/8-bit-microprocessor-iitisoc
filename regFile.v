@@ -1,7 +1,40 @@
-module regFile (data1,data2,addr1,addr2,rd_addr,rd_data,enable,reset);
-output reg [7:0] data1,data2;
-input [2:0] addr1,addr2,rd_addr;
-input [7:0] rd_data;
-input enable,reset;
+`timescale 1ns/1ps
+module regFile (rs1_data,rs2_data,rs1_addr,rs2_addr,rd_addr,rd_data,r_w,reset,clk);
+output reg [7:0] rs1_data,rs2_data; // data to be fetched from rs1 and rs2
+input [2:0] rs1_addr,rs2_addr,rd_addr;
+input [7:0] rd_data; // data to be saved in rd;
+input reset,clk;
+input r_w; // 1 for read and 0 for write;
+integer i = 0;
+reg [7:0] registers [0:7];
+
+initial begin
+    for(i = 0 ; i < 8 ; i = i+1) // for testing purpose 
+    begin
+        registers[i] <= i;
+    end
+end
+
+always @(*) begin
+    if(reset)
+    begin
+        for (i = 0; i<8; i = i + 1 ) begin
+            registers[i] = 8'b0;
+        end
+    end
+    else
+    begin
+        if(r_w)
+        begin
+            rs1_data <= registers[rs1_addr];
+            rs2_data <= registers[rs2_addr];
+        end
+        else
+        begin
+            registers[rd_addr] <= rd_data;
+        end
+    end
+end
+
 
 endmodule //regFile
