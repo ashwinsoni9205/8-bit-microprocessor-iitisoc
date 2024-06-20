@@ -1,3 +1,4 @@
+`timescale 1ns/1ps
 module Decoder(instruction, opcode,addressing_mode,reg1,reg2,reg3,data_mem,instruction_mem);
 input [15:0]instruction;
 output reg [3:0]opcode; 

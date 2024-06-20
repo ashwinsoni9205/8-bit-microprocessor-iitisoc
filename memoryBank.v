@@ -10,10 +10,7 @@ integer i;
 reg [7:0] memory [0:31]; // 32 memory locations  , 8 bit each
 
 initial begin
-    for(i = 0 ; i < 32 ; i = i+1) // for testing purpose 
-    begin
-        memory[31-i] <= i;
-    end
+    $readmemb("datamem.txt",memory); // feeding data to the memory;
 end
 always @(*) 
 begin

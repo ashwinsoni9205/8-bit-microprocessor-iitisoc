@@ -1,18 +1,16 @@
 `timescale 1ns/1ps
-module regFile (rs1_data,rs2_data,rs1_addr,rs2_addr,rd_addr,rd_data,r_w,reset,clk);
-output reg [7:0] rs1_data,rs2_data; // data to be fetched from rs1 and rs2
+module regFile (rs1_data,rs2_data,rs1_addr,rs2_addr,rd_addr,rd_data,r_w,reset,input_length);
+output reg [7:0] rs1_data,rs2_data; // data to be fetched from rs1 and rs2;
 input [2:0] rs1_addr,rs2_addr,rd_addr;
 input [7:0] rd_data; // data to be saved in rd;
-input reset,clk;
+input reset;
+input input_length; // 0 will mean rd_data is of 8 bits and 1 will mean it is of 16 bits;
 input r_w; // 1 for read and 0 for write;
 integer i = 0;
 reg [7:0] registers [0:7];
 
 initial begin
-    for(i = 0 ; i < 8 ; i = i+1) // for testing purpose 
-    begin
-        registers[i] <= i;
-    end
+    $readmemb("regdata.txt",registers); // feeding data to the regbank
 end
 
 always @(*) begin
@@ -31,7 +29,15 @@ always @(*) begin
         end
         else
         begin
-            registers[rd_addr] <= rd_data;
+            if(input_length == 0)
+            begin
+                registers[rd_addr] <= rd_data[7:0];
+            end
+            else
+            begin
+                registers[rd_addr] <= rd_data[15:8];
+                registers[rd_addr+1] <= rd_data[7:0];
+            end
         end
     end
 end
