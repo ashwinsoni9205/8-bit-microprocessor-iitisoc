@@ -25,7 +25,6 @@ integer i;
 regFile r1(operand_1,rs2_data,mux_1_out,rs2,rd,rd_data,1,0,x);
 memoryBank m1(mem_data,8'b0,mem_addr,5'b0,1,0,clk);
 
-
 always @( *) begin
 
     if(opcode == 5'b00101 || opcode == 5'b00110 || opcode == 5'b01001 || opcode == 5'b10000
@@ -47,13 +46,6 @@ always @( *) begin
     begin
         operand_2 <= mem_data; // operand 2 will be mem data;
     end
-    else
-    begin
-        if(opcode == 5'b01011)
-        operand_2 <= mem_data;
-        else if(opcode == 5'b01100)
-        operand_2 <= operand_1;
-    end
 end
 
     always @(*) 
@@ -69,7 +61,10 @@ begin
             case(opcode)
                 5'b00000 : begin
                 result[15:8] <= 8'bx;
+                if(am == 0)
                 result[7:0] <= operand_1;
+                else
+                result[7:0] <= operand_2;
                 end // move
 
                 5'b00001 : begin
@@ -91,12 +86,18 @@ begin
 
                 5'b00101 : begin
                     result[15:8] <= 8'bx;
+                    if(am == 0)
                     {carry_flag,result[7:0]} <= operand_1 + 1;
+                    else
+                    {carry_flag,result[7:0]} <= operand_2 + 1;
                     end // increment
 
                 5'b00110 : begin
                     result[15:8] <= 8'bx;
+                    if(am == 0)
                     {carry_flag,result[7:0]} <= operand_1 - 1;
+                    else
+                    {carry_flag,result[7:0]} <= operand_2 - 1;
                     end // decrement
 
                 5'b00111 : begin
@@ -111,7 +112,10 @@ begin
 
                 5'b01001 : begin
                     result[15:8] <= 8'bx;
+                    if(am == 0)
                     result[7:0] <= ~operand_1;
+                    else
+                    result[7:0] <= ~operand_2;
                     end // NOT
 
                 5'b01010 : begin
@@ -121,12 +125,12 @@ begin
 
                 5'b01011 : begin
                     result[15:8] <= 8'bx;
-                    result[7:0] <= operand_2;
+                    result[7:0] <= mem_data;
                     end // load mem to reg;
 
                 5'b01100 : begin
                     result[15:8] <= 8'bx;
-                    result[7:0] <= operand_2;
+                    result[7:0] <= operand_1;
                     end // load reg to mem;    
 
                 5'b01101 : begin
@@ -139,12 +143,18 @@ begin
 
                 5'b10000 : begin
                     result[15:8] <= 8'bx;
+                    if(am == 0)
                     {carry_flag,result[7:0]} <= operand_1[7:0] << s_r_amount;
+                    else
+                    {carry_flag,result[7:0]} <= operand_2[7:0] << s_r_amount;
                     end // arithmetic shift left
 
                 5'b10001 : begin
                     result[15:8] <= 8'bx;
+                    if(am==0)
                     temp = operand_1;
+                    else
+                    temp = operand_2;
                     for (i = 0; i < s_r_amount; i = i + 1) begin
                         carry_flag = temp[0];
                         temp[7:0] = {temp[7],temp[7:1]}; 
@@ -154,17 +164,26 @@ begin
 
                 5'b10010 : begin
                     result[15:8] <= 8'bx;
+                    if(am == 0)
                     {carry_flag,result[7:0]} <= operand_1[7:0] << s_r_amount; 
+                    else
+                    {carry_flag,result[7:0]} <= operand_2[7:0] << s_r_amount; 
                     end // logical shift left
 
-                5'b10011 : begin
+                5'b10011 : begin // ERROR IN THIS OPERATION
                     result[15:8] <= 8'bx;
+                    if(am == 0)
                     {result[7:0],carry_flag} <= operand_1[7:0] >> s_r_amount;  
+                    else                    
+                    {result[7:0],carry_flag} <= operand_2[7:0] >> s_r_amount;  
                     end // logical shift right
 
                 5'b10100 : begin
                     result[15:8] <= 8'bx;
+                    if(am == 0)
                     temp = operand_1;
+                    else
+                    temp = operand_2;
                     for (i = 0; i < s_r_amount; i = i + 1) begin
                     temp[7:0] = {temp[6:0],temp[7]};
                     end
@@ -173,7 +192,10 @@ begin
 
                 5'b10101 : begin
                     result[15:8] <= 8'bx;
+                    if(am == 0)
                     temp = operand_1;
+                    else
+                    temp = operand_2;
                     for (i = 0; i < s_r_amount; i = i + 1) begin
                     temp[7:0] = {temp[0],temp[7:1]};
                     end
