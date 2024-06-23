@@ -29,11 +29,11 @@ always @(*) begin
         end
         else
         begin
-            if(input_length == 0)
+            if(input_length == 1'b0)
             begin
                 registers[rd_addr] <= rd_data[7:0];
             end
-            else
+            else if(input_length == 1'b1)
             begin
                 registers[rd_addr] <= rd_data[15:8];
                 registers[rd_addr+1] <= rd_data[7:0];
