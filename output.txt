@@ -1,0 +1,256 @@
+Instruction: 0000010000000000
+Opcode: 00000
+Addressing Mode: 1
+rd: 000, rs1: zzz, rs2: zzz
+Data_mem: 0000
+Instruction_mem:zzzzzz
+s_r_amount:zzz
+
+Instruction: 0000100000000000
+Opcode: 00001
+Addressing Mode: 0
+rd: 000, rs1: 000, rs2: 000
+Data_mem: zzzz
+Instruction_mem:zzzzzz
+s_r_amount:zzz
+
+Instruction: 0000110000000000
+Opcode: 00001
+Addressing Mode: 1
+rd: 000, rs1: 000, rs2: zzz
+Data_mem: 0000
+Instruction_mem:zzzzzz
+s_r_amount:zzz
+
+Instruction: 0001000000000000
+Opcode: 00010
+Addressing Mode: 0
+rd: 000, rs1: 000, rs2: 000
+Data_mem: zzzz
+Instruction_mem:zzzzzz
+s_r_amount:zzz
+
+Instruction: 0001010000000000
+Opcode: 00010
+Addressing Mode: 1
+rd: 000, rs1: 000, rs2: zzz
+Data_mem: 0000
+Instruction_mem:zzzzzz
+s_r_amount:zzz
+
+Instruction: 0001100000000000
+Opcode: 00011
+Addressing Mode: 0
+rd: 000, rs1: 000, rs2: 000
+Data_mem: zzzz
+Instruction_mem:zzzzzz
+s_r_amount:zzz
+
+Instruction: 0001110000000000
+Opcode: 00011
+Addressing Mode: 1
+rd: 000, rs1: 000, rs2: zzz
+Data_mem: 0000
+Instruction_mem:zzzzzz
+s_r_amount:zzz
+
+Instruction: 0010000000000000
+Opcode: 00100
+Addressing Mode: 0
+rd: 000, rs1: 000, rs2: 000
+Data_mem: zzzz
+Instruction_mem:zzzzzz
+s_r_amount:zzz
+
+Instruction: 0010010000000000
+Opcode: 00100
+Addressing Mode: 1
+rd: 000, rs1: 000, rs2: zzz
+Data_mem: 0000
+Instruction_mem:zzzzzz
+s_r_amount:zzz
+
+Instruction: 0010100000000000
+Opcode: 00101
+Addressing Mode: 0
+rd: 000, rs1: zzz, rs2: zzz
+Data_mem: zzzz
+Instruction_mem:zzzzzz
+s_r_amount:zzz
+
+Instruction: 0010110000000000
+Opcode: 00101
+Addressing Mode: 1
+rd: zzz, rs1: zzz, rs2: zzz
+Data_mem: 0000
+Instruction_mem:zzzzzz
+s_r_amount:zzz
+
+Instruction: 0011000000000000
+Opcode: 00110
+Addressing Mode: 0
+rd: 000, rs1: zzz, rs2: zzz
+Data_mem: zzzz
+Instruction_mem:zzzzzz
+s_r_amount:zzz
+
+Instruction: 0011010000000000
+Opcode: 00110
+Addressing Mode: 1
+rd: zzz, rs1: zzz, rs2: zzz
+Data_mem: 0000
+Instruction_mem:zzzzzz
+s_r_amount:zzz
+
+Instruction: 0011100000000000
+Opcode: 00111
+Addressing Mode: 0
+rd: 000, rs1: 000, rs2: 000
+Data_mem: zzzz
+Instruction_mem:zzzzzz
+s_r_amount:zzz
+
+Instruction: 0011110000000000
+Opcode: 00111
+Addressing Mode: 1
+rd: 000, rs1: 000, rs2: zzz
+Data_mem: 0000
+Instruction_mem:zzzzzz
+s_r_amount:zzz
+
+Instruction: 0100000000000000
+Opcode: 01000
+Addressing Mode: 0
+rd: 000, rs1: 000, rs2: 000
+Data_mem: zzzz
+Instruction_mem:zzzzzz
+s_r_amount:zzz
+
+Instruction: 0100010000000000
+Opcode: 01000
+Addressing Mode: 1
+rd: 000, rs1: 000, rs2: zzz
+Data_mem: 0000
+Instruction_mem:zzzzzz
+s_r_amount:zzz
+
+Instruction: 0100100000000000
+Opcode: 01001
+Addressing Mode: 0
+rd: 000, rs1: zzz, rs2: zzz
+Data_mem: zzzz
+Instruction_mem:zzzzzz
+s_r_amount:zzz
+
+Instruction: 0100110000000000
+Opcode: 01001
+Addressing Mode: 1
+rd: zzz, rs1: zzz, rs2: zzz
+Data_mem: 0000
+Instruction_mem:zzzzzz
+s_r_amount:zzz
+
+Instruction: 0101000000000000
+Opcode: 01010
+Addressing Mode: 0
+rd: 000, rs1: 000, rs2: 000
+Data_mem: zzzz
+Instruction_mem:zzzzzz
+s_r_amount:zzz
+
+Instruction: 0101010000000000
+Opcode: 01010
+Addressing Mode: 1
+rd: 000, rs1: 000, rs2: zzz
+Data_mem: 0000
+Instruction_mem:zzzzzz
+s_r_amount:zzz
+
+Instruction: 0101100000000000
+Opcode: 01011
+Addressing Mode: 0
+rd: 000, rs1: zzz, rs2: zzz
+Data_mem: 0000
+Instruction_mem:zzzzzz
+s_r_amount:zzz
+
+Instruction: 0101110000000000
+Opcode: 01011
+Addressing Mode: 1
+rd: 000, rs1: zzz, rs2: zzz
+Data_mem: 0000
+Instruction_mem:zzzzzz
+s_r_amount:zzz
+
+Instruction: 0110000000000000
+Opcode: 01100
+Addressing Mode: 0
+rd: 000, rs1: zzz, rs2: zzz
+Data_mem: zzzz
+Instruction_mem:000000
+s_r_amount:zzz
+
+Instruction: 0110010000000000
+Opcode: 01100
+Addressing Mode: 1
+rd: 000, rs1: zzz, rs2: zzz
+Data_mem: zzzz
+Instruction_mem:000000
+s_r_amount:zzz
+
+Instruction: 0110100000000000
+Opcode: 01101
+Addressing Mode: 0
+rd: zzz, rs1: zzz, rs2: zzz
+Data_mem: zzzz
+Instruction_mem:000000
+s_r_amount:zzz
+
+Instruction: 0110110000000000
+Opcode: 01101
+Addressing Mode: 1
+rd: zzz, rs1: zzz, rs2: zzz
+Data_mem: zzzz
+Instruction_mem:000000
+s_r_amount:zzz
+
+Instruction: 0111000000000000
+Opcode: 01110
+Addressing Mode: 0
+rd: zzz, rs1: zzz, rs2: zzz
+Data_mem: zzzz
+Instruction_mem:000000
+s_r_amount:zzz
+
+Instruction: 0111010000000000
+Opcode: 01110
+Addressing Mode: 1
+rd: zzz, rs1: zzz, rs2: zzz
+Data_mem: zzzz
+Instruction_mem:000000
+s_r_amount:zzz
+
+Instruction: 0111100000000000
+Opcode: 01111
+Addressing Mode: 0
+rd: zzz, rs1: zzz, rs2: zzz
+Data_mem: zzzz
+Instruction_mem:zzzzzz
+s_r_amount:zzz
+
+Instruction: 0111110000000000
+Opcode: 01111
+Addressing Mode: 1
+rd: zzz, rs1: zzz, rs2: zzz
+Data_mem: zzzz
+Instruction_mem:zzzzzz
+s_r_amount:zzz
+
+Instruction: 1000000000000000
+Opcode: 10000
+Addressing Mode: 0
+rd: 000, rs1: zzz, rs2: zzz
+Data_mem: zzzz
+Instruction_mem:zzzzzz
+s_r_amount:000
+

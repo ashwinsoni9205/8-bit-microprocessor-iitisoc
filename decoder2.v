@@ -1,81 +1,94 @@
-`timescale 1ns/1ps
-module Decoder(instruction, opcode,addressing_mode,reg1,reg2,reg3,data_mem,instruction_mem);
+module Decoder(instruction, opcode,addressing_mode,rd,rs1,rs2,data_mem,instruction_mem,s_r_amount);
 input [15:0]instruction;
-output reg [3:0]opcode; 
+output reg [4:0]opcode; 
 output reg addressing_mode;
-output reg [2:0]reg1;
-output reg [2:0]reg2;
-output reg [2:0]reg3;
-output reg [4:0]data_mem;
-output reg [4:0]instruction_mem;
+output reg [2:0]rd;
+output reg [2:0]rs1;
+output reg [2:0]rs2;
+output reg [3:0]data_mem;
+output reg [5:0]instruction_mem;
+output reg [2:0]s_r_amount;
 
-parameter MOVE=4'b0000, ADD=4'b0001, SUB=4'b0010, MUL=4'b0011, 
-          DIV=4'b0100, INC=4'b0101, DEC=4'b0110, AND=4'b0111, 
-          OR=4'b1000, NOT=4'b1001, XOR=4'b1010, LOAD=4'b1011, 
-          STORE=4'b1100, JUMP=4'b1101, BRANCH=4'b1110, HALT=4'b1111;
+parameter MOVE=5'b00000, ADD=5'b00001, SUB=5'b00010, MUL=5'b00011, 
+          DIV=5'b00100, INC=5'b00101, DEC=5'b00110, AND=5'b00111, 
+          OR=5'b01000, NOT=5'b01001, XOR=5'b01010, LOAD=5'b01011, 
+          STORE=5'b01100, JUMP=5'b01101, BEQZ=5'b01110, HALT=5'b11111,      // BEQZ: Branch if equal to zero
+          ASHL=5'b10000, ASHR=5'b10001, LSHL=5'b10010, LSHR=5'b10011,       // ASHL: Arithmetic Shift Left, LSHL: Logical Shift Left
+          ROTL=5'b10100, ROTR=5'b10101,BC=5'b10110, BAUX=5'b10111,          // ROTL: Rotate Left, BC: Branch if carry flag is set, BAUX: Branch if Auxialiary carry flag is set
+          BPAR=5'b11000, COMPARE=5'b11001  ;                                // BPAR: Branch if parity flag is set
 
 always @(*) begin
-    opcode = instruction[15:12];
-    addressing_mode = instruction[11];
-    //initializing values
-    reg1 = 3'b000;
-    reg2 = 3'b000;
-    reg3 = 3'b000;
-    data_mem = 5'b00000;
-    instruction_mem = 5'b00000;
-
+    rd = 3'bzzz;
+    rs1 = 3'bzzz;
+    rs2 = 3'bzzz;
+    data_mem = 4'bzzzz;
+    instruction_mem = 6'bzzzzzz;
+    s_r_amount = 3'bzzz;
+    opcode = instruction[15:11];
+    addressing_mode = instruction[10];
         case (opcode)
             MOVE: 
                 begin 
                     if (addressing_mode == 1'b0) begin
-                        reg1 = instruction[10:8];
-                        reg2 = instruction[7:5];
+                        rd = instruction[9:7];
+                        rs1 = instruction[6:4];
                     end else begin
-                        reg1 = instruction[10:8];
-                        data_mem = instruction[7:3];
+                        rd = instruction[9:7];
+                        data_mem = instruction[7:4];
                     end
                 end
-            ADD,SUB,MUL,DIV,AND,OR,XOR:
+            ADD,SUB,MUL,DIV,AND,OR,XOR,COMPARE:
                 begin
                     if (addressing_mode == 1'b0) begin
-                        reg1 = instruction[10:8];
-                        reg2 = instruction[7:5];
-                        reg3 = instruction[4:2];
+                        rd = instruction[9:7];
+                        rs1 = instruction[6:4];
+                        rs2 = instruction[3:1];
                     end else begin
-                        reg1 = instruction[10:8];
-                        reg2 = instruction[7:5];
-                        data_mem = instruction[4:0];
+                        rd = instruction[9:7];
+                        rs1 = instruction[6:4];
+                        data_mem = instruction[3:0];
                     end
                 end
             INC,DEC,NOT:
                 begin
                     if (addressing_mode == 1'b0) begin
-                        reg1 = instruction[10:8];
+                        rd = instruction[9:7];
                     end else begin
-                        data_mem = instruction[10:6];
+                        data_mem = instruction[9:6];
                     end
                 end
             LOAD:
                 begin
-                    reg1 = instruction[10:8];
-                    data_mem = instruction[7:3];
+                    rd = instruction[9:7];
+                    data_mem = instruction[7:4];
                 end
             STORE:
                 begin
-                    instruction_mem = instruction[10:6];
-                    reg1 = instruction[5:3];
+                    instruction_mem = instruction[9:4];
+                    rd = instruction[5:3];
                 end
-            JUMP:
+            JUMP,BEQZ,BC,BAUX,BPAR:
                 begin
-                    instruction_mem = instruction[10:6];
+                    instruction_mem = instruction[9:4];
+                end
+            ASHL,ASHR,LSHL,LSHR,ROTL,ROTR:
+                begin
+                    if (addressing_mode == 1'b0) begin
+                        rd = instruction[9:7];
+                        s_r_amount = instruction[6:4];
+                    end else begin
+                        data_mem = instruction[9:6];
+                        s_r_amount = instruction[6:4];
+                    end
                 end
             default: 
                 begin
-                    reg1 = 3'b000;
-                    reg2 = 3'b000;
-                    reg3 = 3'b000;
-                    data_mem = 5'b00000;
-                    instruction_mem = 5'b00000;
+                    rd = 3'bzzz;
+                    rs1 = 3'bzzz;
+                    rs2 = 3'bzzz;
+                    data_mem = 4'bzzzz;
+                    instruction_mem = 6'bzzzzzz;
+                    s_r_amount=3'bzzz;
                 end
         endcase       
     end    
