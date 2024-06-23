@@ -159,5 +159,3 @@ module tb_write_back();
     end
 
 endmodule
-/* ./iverilog -o writeback.vvp writebacktb.v 
-./vvp writeback.vvp */
