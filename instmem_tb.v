@@ -1,13 +1,13 @@
 `timescale 1ns/1ns
 `include "instmem.v"
-module instmem_tb;
+`timescale 1ns/1ns
 
-    reg [15:0] pc;
+module tb_instmem;
+    reg [5:0] pc;
     reg reset;
     reg enable;
     wire [15:0] instruction;
 
-    
     instmem uut (
         .instruction(instruction),
         .pc(pc),
@@ -16,43 +16,39 @@ module instmem_tb;
     );
 
     initial begin
-        
-        pc = 16'b0;
-        reset = 1'b0;
-        enable = 1'b0;
-
-      
+        // Initialize signals
+        pc = 6'b0;
         reset = 1;
-        #10; 
-        reset = 0;
-
-        
-        enable = 1;
-
-        
-        #10 pc = 16'b0000000000000000; // Read address 0
-        #10 pc = 16'b0000000000000001; // Read address 1
-        #10 pc = 16'b0000000000000010; // Read address 2
-        #10 pc = 16'b0000000000000011; // Read address 3
-        #10 pc = 16'b0000000000000100; // Read address 4
-        #10 pc = 16'b0000000000000101; // Read address 5
-
-        
         enable = 0;
         #10;
 
-        
-        reset = 1;
-        #10;
+        // Test reset functionality
         reset = 0;
+        enable = 1;
+        pc = 6'b000000;
+        #10;
+        $display("Instruction at PC %b: %b", pc, instruction);
 
-        
+        // Test reading another instruction
+        pc = 6'b000001;
+        #10;
+        $display("Instruction at PC %b: %b", pc, instruction);
+
+        // Test reading another instruction
+        pc = 6'b000010;
+        #10;
+        $display("Instruction at PC %b: %b", pc, instruction);
+
+        // Test reading another instruction
+        pc = 6'b000011;
+        #10;
+        $display("Instruction at PC %b: %b", pc, instruction);
+
         $finish;
     end
 
-    // Monitor changes
     initial begin
-        $monitor("Time: %0t, Reset: %b, Enable: %b, PC: %h, Instruction: %h", $time, reset, enable, pc, instruction);
+        // Load instruction memory from file
+        $readmemb("instruct.txt", uut.instrmem);
     end
-
 endmodule
