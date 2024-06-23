@@ -12,9 +12,10 @@ input am; // addressing mode;
 input enable,reset,clk;
 input [2:0] rd,rs1,rs2; // register addereses recieved from prev stages;
 input [3:0] mem_addr;
-input [4:0] instr_mem_addr; // memory addr. recieved from prev stages;
+input [5:0] instr_mem_addr; // memory addr. recieved from prev stages;
 
-wire [7:0] rs2_data,operand_1,rd_data,mem_data;
+wire [7:0] rs2_data,operand_1,mem_data;
+wire [15:0] rd_data;
 
 reg [7:0] operand_2;
 reg[2:0] mux_1_out; // to decide from where the operand_1 will come;
