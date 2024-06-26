@@ -171,7 +171,7 @@ begin
                     {carry_flag,result[7:0]} <= operand_2[7:0] << s_r_amount; 
                     end // logical shift left
 
-                5'b10011 : begin // ERROR IN THIS OPERATION
+                5'b10011 : begin
                     result[15:8] <= 8'bx;
                     if(am == 0)
                     {result[7:0],carry_flag} <= operand_1[7:0] >> s_r_amount;  
