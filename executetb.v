@@ -31,17 +31,35 @@ begin
    $monitor("opcode: %b , am: %b , rd: %b, rs1: %b, rs2: %b, result: %b, zero_flag: %b, carry_flag: %b, parity_flag: %b, ac_flag: %b",
    opcode,am,rd,rs1,rs2,result,zero_flag,carry_flag,parity_flag,ac_flag);
     #2;
-    opcode <= 5'b10000; am <= 1'b0; rd <= 3'b001; rs1 <= 3'b001; s_r_amount <= 1; 
-    rs2 <= 3'b110; mem_addr<= 0111; enable <= 1'b1; reset <=1'b0;
+    opcode <= 5'b00011; am <= 1'b0; rd <= 3'b100; rs1 <= 3'b101; s_r_amount <= 1'bz; 
+    rs2 <= 3'b111; mem_addr<= 4'bzzzz; enable <= 1'b1; reset <=1'b0;
     #5;
-    opcode <= 5'b00110; am <= 1'b0; rd <= 3'b001; rs1 <= 3'b011; s_r_amount <= 1;
-    rs2 <= 3'b111; mem_addr<= 0000; enable <= 1'b1; reset <=1'b0;
+    opcode <= 5'b00001; am <= 1'b0; rd <= 3'b100; rs1 <= 3'b101; s_r_amount <= 1'bz;
+    rs2 <= 3'b111; mem_addr<= 4'bzzzz; enable <= 1'b1; reset <=1'b0;
     #5;
-    opcode <= 5'b10010; am <= 1'b0; rd <= 3'b001; rs1 <= 3'b001; s_r_amount <= 1;
-    rs2 <= 3'b110; mem_addr<= 0000; enable <= 1'b1; reset <=1'b0;
+    opcode <= 5'b01010; am <= 1'b0; rd <= 3'b100; rs1 <= 3'b101; s_r_amount <= 1'bz;
+    rs2 <= 3'b111; mem_addr<= 4'bzzzz; enable <= 1'b1; reset <=1'b0;
     #5;
-    opcode <= 5'b10011; am <= 1'b0; rd <= 3'b001; rs1 <= 3'b011; s_r_amount <= 3'b101;
-    rs2 <= 3'b111; mem_addr<= 0000; enable <= 1'b1; reset <=1'b0;
+    opcode <= 5'b01110; am <= 1'b0; rd <= 3'bzzz; rs1 <= 3'bzzz; s_r_amount <= 3'bzzz;
+    rs2 <= 3'bzzz; mem_addr<= 4'bzzzz; enable <= 1'b1; reset <=1'b0;
+    #5;
+    opcode <= 5'b01011; am <= 1'b0; rd <= 3'b100; rs1 <= 3'bzzz; s_r_amount <= 3'bzzz;
+    rs2 <= 3'bzzz; mem_addr<= 4'bzzzz; enable <= 1'b1; reset <=1'b0;
+    #5;
+    opcode <= 5'b10100; am <= 1'b0; rd <= 3'b111; rs1 <= 3'bzzz; s_r_amount <= 3'b001;
+    rs2 <= 3'bzzz; mem_addr<= 4'bzzzz; enable <= 1'b1; reset <=1'b0;
+    #5;
+    opcode <= 5'b10010; am <= 1'b0; rd <= 3'b111; rs1 <= 3'bzzz; s_r_amount <= 3'b001;
+    rs2 <= 3'bzzz; mem_addr<= 4'bzzzz; enable <= 1'b1; reset <=1'b0;
+    #5;
+    opcode <= 5'b10000; am <= 1'b0; rd <= 3'b111; rs1 <= 3'bzzz; s_r_amount <= 3'b001;
+    rs2 <= 3'bzzz; mem_addr<= 4'bzzzz; enable <= 1'b1; reset <=1'b0;
+    #5;
+    opcode <= 5'b00101; am <= 1'b0; rd <= 3'b111; rs1 <= 3'bzzz; s_r_amount <= 3'bzzz;
+    rs2 <= 3'bzzz; mem_addr<= 4'bzzzz; enable <= 1'b1; reset <=1'b0;
+    #5;
+    opcode <= 5'b11111; am <= 1'bz; rd <= 3'bzzz; rs1 <= 3'bzzz; s_r_amount <= 3'bzzz;
+    rs2 <= 3'bzzz; mem_addr<= 4'bzzzz; enable <= 1'b1; reset <=1'b0;
     #50 $finish;
 end
 endmodule //executetb

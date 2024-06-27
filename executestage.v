@@ -23,7 +23,7 @@ reg [7:0] temp;
 
 integer i;
 
-regFile r1(operand_1,rs2_data,mux_1_out,rs2,rd,rd_data,1,0,x);
+regFile r1(operand_1,rs2_data,mux_1_out,rs2,rd,rd_data,1,0,1'bx);
 memoryBank m1(mem_data,8'b0,mem_addr,5'b0,1,0,clk);
 
 always @( *) begin
@@ -277,6 +277,11 @@ begin
     begin
         parity_flag = 0;
         parity_flag = parity_flag^result[0];
+    end
+    else if(opcode ==5'b01110 || opcode == 5'b10110 || opcode == 5'b10111 
+    || opcode == 5'b11000 || opcode == 5'b01011 || opcode == 5'b01100)
+    begin
+    parity_flag = parity_flag;
     end
     else
     begin
