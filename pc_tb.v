@@ -1,46 +1,36 @@
 `timescale 1ns/1ns
 `include "pc.v"
+`include "instmem.v"
 
-module tb_pc;
-    reg loadPC;
-    reg incPC;
-    reg [5:0] address;
+module instfetch(
+    input reset,
+    input clk,
+    output [15:0] instruction
+);
+
     wire [5:0] execadd;
+    reg temp,enable;
 
-    pc uut (
-        .loadPC(loadPC),
-        .incPC(incPC),
-        .address(address),
-        .execadd(execadd)
+    
+    always @(posedge clk) begin
+        temp = 1;
+        #5; 
+        temp = 0;
+    end
+
+    // Instantiate the pc module
+    pc pc_inst (
+        .incPC(temp),
+        .execadd(execadd),
+        .reset(reset)
     );
 
-    initial begin
-        // Initialize signals
-        loadPC = 0;
-        incPC = 0;
-        address = 6'b0;
-        #10;
+    // Instantiate the instmem module
+    instmem instmem_inst (
+        .instruction(instruction),
+        .pc(execadd),
+        .reset(1'b0),
+        .enable(1'b1)
+    );
 
-        // Test loading an address
-        address = 6'b001010;
-        loadPC = 1;
-        incPC = 0;
-        #10;
-        $display("execadd: %b", execadd);
-
-        // Test incrementing the PC
-        loadPC = 0;
-        incPC = 1;
-        #10;
-        $display("execadd: %b", execadd);
-
-        // Test resetting the PC
-        loadPC = 0;
-        incPC = 0;
-        #10;
-        $display("execadd: %b", execadd);
-
-        $finish;
-    end
-    
 endmodule

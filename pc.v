@@ -3,6 +3,7 @@
 module pc(
     input loadPC,
     input incPC,
+    input reset,
     input [5:0] address,
     output reg [5:0] execadd
 );
@@ -10,11 +11,13 @@ module pc(
 reg [5:0] temp;
 
 always @(*) begin
-    if (loadPC == 1 && incPC == 0) begin
+    if (loadPC) begin
         temp = address;
-    end else if (loadPC == 0 && incPC == 1) begin
+    end 
+    else if (incPC) begin
         temp = temp + 6'b000001;
-    end else if (loadPC == 0 && incPC == 0) begin
+    end 
+    else if (reset) begin
         temp = 6'b000000;
     end
     execadd = temp;
