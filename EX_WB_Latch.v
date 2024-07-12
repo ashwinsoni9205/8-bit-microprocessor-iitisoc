@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module EX_WB_latch (
+module latch_ex_wb (
     input clk,
     input rst,
     input [4:0] ID_EX_opcode,   
@@ -24,9 +24,9 @@ module EX_WB_latch (
     output reg EX_WB_ac_flag,
     output reg EX_WB_parity_flag
 );
-    always @ (clk) 
+    always @ (*) 
     begin
-        if (clk && !rst)
+        if (clk)
          begin
            EX_WB_opcode = ID_EX_opcode;
            EX_WB_am = ID_EX_am;

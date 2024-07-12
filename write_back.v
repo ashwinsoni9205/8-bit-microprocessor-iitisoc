@@ -1,7 +1,4 @@
 `timescale 1ns/1ps
-`include "regFile.v"
-`include "memoryBank.v"
-`include "pc.v"
 
 module write_back (
     input [4:0] opcode,
@@ -15,22 +12,20 @@ module write_back (
     input zero_flag,
     input carry_flag,
     input auxiliary_flag,
-    input parity_flag
-);
-    reg [15:0] rd_data;
-    reg [7:0] mem_data_in; // data to be saved in memory
+    input parity_flag,
+    output reg loadPC,
+    output reg [5:0] address,
+    output reg [15:0] rd_data,
+    output reg input_length,
+    output reg r_w_reg,
+    output reg r_w_mem,
+    output reg [7:0] mem_data_in // data to be saved in memory
 
+);
     reg r_w;
     wire [7:0] rs1_data, rs2_data, mem_data_out;
-    reg input_length;
     
-    reg loadPC;
     reg incPC;
-    reg [5:0] address;
-
-    regFile r1 (rs1_data, rs2_data, 3'bz, 3'bz, rd, rd_data, 1'b0, 1'b0, input_length);
-    memoryBank m1(mem_data_out, mem_data_in, 4'bx, mem_addr, r_w, 1'b0, clk);
-    pc p1(.loadPC(loadPC), .address(address));
 
     parameter MOVE = 5'b00000, ADD = 5'b00001, SUB = 5'b00010, MUL = 5'b00011, 
               DIV = 5'b00100, INC = 5'b00101, DEC = 5'b00110, AND = 5'b00111, 
@@ -44,28 +39,58 @@ module write_back (
         HALTED <= 0;
         input_length = 1'b0;
         loadPC = 1'b0;  
-        r_w = 1'b1;
+        r_w_mem = 1'bz;
+        r_w_reg = 1'bz;
+        if(clk)
+        begin
+            r_w_reg = 1;
+            r_w_mem = 1;
+            #2;
+            r_w_reg = 1'bz;
+            r_w_mem = 1'bz;
+        end
 
         case(opcode)
             MOVE, ADD, SUB, AND, OR, XOR, COMPARE, LOAD: begin 
-                rd_data <= alu_out;
-                if (opcode == LOAD) r_w = 1'b1; 
+                rd_data = alu_out;
+                r_w_reg = 0;
+                #1;
+                r_w_reg = 1'bz;
+                if (opcode == LOAD) 
+                begin 
+                    r_w_mem = 1'b1; 
+                    #1;
+                    r_w_mem = 1'bz;
+                end
             end
             MUL, DIV: begin
                 input_length = 1'b1;
                 rd_data = alu_out;
+                r_w_reg = 0;
+                #1;
+                r_w_reg = 1'bz;
             end
             INC, DEC, NOT, ASHL, ASHR, LSHL, LSHR, ROTL, ROTR: begin
                 if (am == 1'b0) 
-                    rd_data <= alu_out;
+                begin
+                    rd_data = alu_out;
+                    r_w_reg = 0;
+                    #1;
+                    r_w_reg = 1'bz;
+                end
                 else begin
-                    mem_data_in <= alu_out;
+                    mem_data_in = alu_out;
+                    r_w_mem = 1'b0;
+                    #1;
+                    r_w_mem = 1'bz;
                     r_w = 1'b0; 
                 end
             end
             STORE: begin
-                mem_data_in <= alu_out;
-                r_w = 1'b0; 
+                mem_data_in = alu_out;
+                r_w_mem = 1'b0;
+                #1;
+                r_w_mem = 1'bz; 
             end
             JUMP: begin
                 address <= instr_mem_addr;

@@ -2,23 +2,29 @@
 
 // Include all the necessary module files
 `include "instfetch.v"
-`include "decoder.v"
+`include "decoder2.v"
 `include "executestage.v"
-`include "writeback.v"
-`include "latch_if_id.v"
-`include "latch_id_ex.v"
-`include "latch_ex_wb.v"
+`include "write_back.v"
+`include "Latch_IF_ID.v"
+`include "latch_ID_EX.v"
+`include "EX_WB_Latch.v"
 `include "controller.v"
+`include "regFile.v"
+`include "pc.v"
+`include "memoryBank.v"
+`include "instmem.v"
 
 module pipeline_processor(
     input resume,
     input restart,
     input controller_enable
 );
-
-    wire clk1,clk2,rst,enable;
+    reg r_w_clock;
+    wire clk1,clk2,rst,enable,loadPC_wire,temp_wire,input_length_wire;
+    wire [7:0] rs2_data_wire,operand_1,mem_data_wire,mem_data_in_wire;
+    wire [5:0] address_wire,execadd_wire;
     // Wires for Instruction Fetch Stage
-    wire [15:0] IF_instruction;
+    wire [15:0] IF_instruction,rd_data_wire;
     wire [5:0] pc_out;
 
     // Wires for IF/ID Latch
@@ -26,8 +32,8 @@ module pipeline_processor(
 
     // Wires for Decode Stage
     wire [4:0] ID_opcode;
-    wire ID_addressing_mode;
-    wire [2:0] ID_rd, ID_rs1, ID_rs2;
+    wire ID_addressing_mode,r_w_reg_wire,r_w_mem_wire;
+    wire [2:0] ID_rd, ID_rs1, ID_rs2,mux_1_out_wire;
     wire [3:0] ID_data_mem;
     wire [5:0] ID_instruction_mem;
     wire [2:0] ID_s_r_amount;
@@ -53,6 +59,50 @@ module pipeline_processor(
     wire [15:0] EX_WB_result;
     wire EX_WB_zero_flag, EX_WB_carry_flag, EX_WB_ac_flag, EX_WB_parity_flag;
 
+    always @(clk1 or clk2) begin
+    if(clk2)
+    r_w_clock = 1;
+    else if(clk1)
+    r_w_clock = 0; 
+    else
+    r_w_clock = 1;
+    end
+
+    pc p1(
+        .incPC(temp_wire),
+        .execadd(execadd_wire),
+        .reset(rst),
+        .loadPC(loadPC_wire),
+        .address(address_wire)
+    );
+    regFile r1(
+        .rs1_data(operand_1),
+        .rs2_data(rs2_data_wire),
+        .rs1_addr(mux_1_out_wire),
+        .rs2_addr(ID_EX_rs2),
+        .rd_addr(EX_WB_rd),
+        .rd_data(rd_data_wire),
+        .r_w(r_w_reg_wire),
+        .reset(),
+        .input_length(input_length_wire)
+    );
+    memoryBank m1(
+        .mem_data_out(mem_data_wire), // data to be fetched from mem
+        .mem_data_in(mem_data_in_wire), // data to be saved in mem
+        .mem_addr_in(EX_WB_mem_addr),// addr_in for address where data to be saved 
+        .mem_addr_out(EX_WB_mem_addr),// addr_out for address from where data is collected for output.
+        .r_w(r_w_mem_wire),
+        .enable(),
+        .reset(),
+        .clk()
+    );
+    instmem i1(
+        .instruction(IF_instruction),
+        .pc(execadd_wire),
+        .reset(1'b0),
+        .enable(1'b1)
+    );
+
     // connecting the controller
     controller control(
         .clk1(clk1),
@@ -66,14 +116,16 @@ module pipeline_processor(
     );
     // Instruction Fetch Stage
     instfetch IF_stage(
-        .clk(clk1),
+        .clk(clk2),
         .reset(rst),
-        .instruction(IF_instruction)
+        .instruction(IF_instruction),
+        .temp(temp_wire),
+        .execadd(execadd_wire)
     );
 
     // IF/ID Latch
     Latch_IF_ID IF_ID_latch(
-        .clk(clk2),
+        .clk(clk1),
         .rst(rst),
         .IF_instruction(IF_instruction),
         .IF_ID_instruction(IF_ID_instruction)
@@ -94,7 +146,7 @@ module pipeline_processor(
 
     // ID/EX Latch
     Latch_ID_EX ID_EX_latch(
-        .clk(clk1),
+        .clk(clk2),
         .rst(rst),
         .IF_ID_opcode(ID_opcode),
         .IF_ID_addressing_mode(ID_addressing_mode),
@@ -131,12 +183,16 @@ module pipeline_processor(
         .s_r_amount(ID_EX_s_r_amount),
         .enable(~HALTED),
         .reset(rst),
-        .clk(clk)
+        .clk(clk),
+        .rs2_data(rs2_data_wire),
+        .operand_1(operand_1),
+        .mux_1_out(mux_1_out_wire),
+        .mem_data(mem_data_wire)
     );
 
     // EX/WB Latch
     latch_ex_wb EX_WB_latch(
-        .clk(clk2),
+        .clk(clk1),
         .rst(rst),
         .ID_EX_opcode(ID_EX_opcode),
         .ID_EX_am(ID_EX_addressing_mode),
@@ -167,13 +223,20 @@ module pipeline_processor(
         .rd(EX_WB_rd),
         .mem_addr(EX_WB_mem_addr),
         .instr_mem_addr(EX_WB_instr_mem_addr),
-        .clk(clk),
+        .clk(clk2),
         .alu_out(EX_WB_result),
         .HALTED(HALTED),
         .zero_flag(EX_WB_zero_flag),
         .carry_flag(EX_WB_carry_flag),
         .auxiliary_flag(EX_WB_ac_flag),
-        .parity_flag(EX_WB_parity_flag)
+        .parity_flag(EX_WB_parity_flag),
+        .loadPC(loadPC_wire),
+        .address(address_wire),
+        .rd_data(rd_data_wire),
+        .input_length(input_length_wire),
+        .r_w_reg(r_w_reg_wire),
+        .mem_data_in(mem_data_in_wire),
+        .r_w_mem(r_w_mem_wire)
     );
 
 endmodule

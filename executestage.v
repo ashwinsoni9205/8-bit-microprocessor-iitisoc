@@ -1,30 +1,26 @@
 `timescale 1ns/1ps
-`include "memoryBank.v"
-`include "regFile.v"
-module executestage (result,zero_flag,carry_flag,ac_flag,parity_flag,opcode,
-am,rd,rs1,rs2,mem_addr,instr_mem_addr,s_r_amount,enable,reset,clk);
-output  reg [15:0] result; // final output from stage;
-output reg zero_flag,carry_flag,ac_flag,parity_flag; // all flag registers;
+module executestage (
+output  reg [15:0] result, // final output from stage;
+output reg zero_flag,carry_flag,ac_flag,parity_flag, // all flag registers,
 
-input [4:0] opcode;
-input [2:0] s_r_amount;
-input am; // addressing mode;
-input enable,reset,clk;
-input [2:0] rd,rs1,rs2; // register addereses recieved from prev stages;
-input [3:0] mem_addr;
-input [5:0] instr_mem_addr; // memory addr. recieved from prev stages;
+input [4:0] opcode,
+input [2:0] s_r_amount,
+input am, // addressing mode,
+input enable,reset,clk,
+input [2:0] rd,rs1,rs2, // register addereses recieved from prev stages,
+input [3:0] mem_addr,
+input [5:0] instr_mem_addr, // memory addr. recieved from prev stages;
+input [7:0] rs2_data,operand_1,
+output reg[2:0] mux_1_out, // to decide from where the operand_1 will come;
+input [7:0] mem_data
+);
 
-wire [7:0] rs2_data,operand_1,mem_data;
-wire [15:0] rd_data;
 
 reg [7:0] operand_2;
-reg[2:0] mux_1_out; // to decide from where the operand_1 will come;
+
 reg [7:0] temp;
 
 integer i;
-
-regFile r1(operand_1,rs2_data,mux_1_out,rs2,rd,rd_data,1,0,1'bx);
-memoryBank m1(mem_data,8'b0,mem_addr,5'b0,1,0,clk);
 
 always @( *) begin
 
