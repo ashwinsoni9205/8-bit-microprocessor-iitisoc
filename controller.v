@@ -1,7 +1,7 @@
 `timescale 1ns/1ps
-module controller (clk1,clk2,reset,enable,halted,resume,restart,controller_enable);
+module controller (internal_clock,clk1,clk2,reset,enable,halted,resume,restart,controller_enable);
 output reg clk1,clk2,reset,enable;
-input halted,resume,restart,controller_enable;
+input internal_clock,halted,resume,restart,controller_enable;
 
 parameter [1:0] S0 = 2'b00;
 parameter [1:0] S1 = 2'b01;
@@ -10,24 +10,6 @@ parameter [1:0] S3 = 2'b11;
 
 reg [1:0] state = 2'b00;
 reg internal_halted, internal_restart;
-reg internal_clock;
-
-always @(controller_enable)
-begin
-    if(controller_enable == 1)
-    begin
-forever begin
-    internal_clock = 1;
-    #1;
-    internal_clock = 0;
-    #1;
-end
-    end
-    else if(controller_enable == 0)
-    begin 
-        internal_clock = 0;
-    end
-end
 always@(restart or halted)
 begin
     if(restart == 1)
@@ -38,7 +20,7 @@ begin
     begin
     end
 end
-always @(posedge internal_clock or negedge internal_clock) begin
+always @(posedge internal_clock ) begin
     if(controller_enable)
     begin
     if(state == S2 && halted == 1'b1)

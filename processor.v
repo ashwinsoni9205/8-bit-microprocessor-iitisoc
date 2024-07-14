@@ -15,12 +15,13 @@
 `include "instmem.v"
 
 module pipeline_processor(
+    input main_clk,
     input resume,
     input restart,
     input controller_enable
 );
-    reg r_w_clock;
-    wire clk1,clk2,rst,enable,loadPC_wire,temp_wire,input_length_wire;
+    reg r_w_clock,main_clk_reg;
+    wire clk1,clk2,rst,enable,loadPC_wire,temp_wire,input_length_wire,HALTED;
     wire [7:0] rs2_data_wire,operand_1,mem_data_wire,mem_data_in_wire;
     wire [5:0] address_wire,execadd_wire;
     // Wires for Instruction Fetch Stage
@@ -67,7 +68,18 @@ module pipeline_processor(
     else
     r_w_clock = 1;
     end
-
+    
+    always@(*)
+    begin
+    if(controller_enable)
+    begin
+    main_clk_reg <= main_clk;
+    end
+    else
+    main_clk_reg <= 0;
+    
+    end
+    
     pc p1(
         .incPC(temp_wire),
         .execadd(execadd_wire),
@@ -83,7 +95,7 @@ module pipeline_processor(
         .rd_addr(EX_WB_rd),
         .rd_data(rd_data_wire),
         .r_w(r_w_reg_wire),
-        .reset(),
+//        .reset(),
         .input_length(input_length_wire)
     );
     memoryBank m1(
@@ -91,10 +103,10 @@ module pipeline_processor(
         .mem_data_in(mem_data_in_wire), // data to be saved in mem
         .mem_addr_in(EX_WB_mem_addr),// addr_in for address where data to be saved 
         .mem_addr_out(EX_WB_mem_addr),// addr_out for address from where data is collected for output.
-        .r_w(r_w_mem_wire),
-        .enable(),
-        .reset(),
-        .clk()
+        .r_w(r_w_mem_wire)
+//        .enable(),
+//        .reset(),
+//        .clk()
     );
     instmem i1(
         .instruction(IF_instruction),
@@ -105,6 +117,7 @@ module pipeline_processor(
 
     // connecting the controller
     controller control(
+        .internal_clock(main_clk_reg),
         .clk1(clk1),
         .clk2(clk2),
         .reset(rst),
@@ -183,7 +196,7 @@ module pipeline_processor(
         .s_r_amount(ID_EX_s_r_amount),
         .enable(~HALTED),
         .reset(rst),
-        .clk(clk),
+//        .clk(clk),
         .rs2_data(rs2_data_wire),
         .operand_1(operand_1),
         .mux_1_out(mux_1_out_wire),
