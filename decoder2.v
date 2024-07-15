@@ -64,7 +64,7 @@ always @(*) begin
                 end
             STORE:
                 begin
-                    instruction_mem = instruction[9:4];
+                    data_mem = instruction[9:6];
                     rd = instruction[5:3];
                 end
             JUMP,BEQZ,BC,BAUX,BPAR:
