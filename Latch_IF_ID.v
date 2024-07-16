@@ -3,7 +3,7 @@ input clk,rst;
 input [15:0]IF_instruction;
 output reg [15:0] IF_ID_instruction;
 always @(*) begin
-  if(clk)begin
+  if(clk&&~rst)begin
     IF_ID_instruction = IF_instruction;
   end
 end
