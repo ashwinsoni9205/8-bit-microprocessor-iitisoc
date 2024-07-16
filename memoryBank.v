@@ -21,10 +21,7 @@ always @(*)
 begin
     if(reset)
     begin
-        for(i = 0 ; i < 15 ; i = i+1)
-    begin
-        memory[i] <= 8'b0;
-    end
+       $readmemb("datamem.txt",memory);
     end
     else
     begin

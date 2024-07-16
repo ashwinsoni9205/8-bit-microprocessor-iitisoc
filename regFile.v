@@ -17,9 +17,7 @@ end
 always @(*) begin
     if(reset)
     begin
-        for (i = 0; i<8; i = i + 1 ) begin
-            registers[i] = 8'b0;
-        end
+        $readmemb("regdata.txt",registers);
     end
     else
     begin
