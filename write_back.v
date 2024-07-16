@@ -1,6 +1,7 @@
 `timescale 1ns/1ps
 
 module write_back (
+    input reset,
     input [4:0] opcode,
     input am,
     input [2:0] rd,
@@ -35,7 +36,20 @@ module write_back (
               ROTL = 5'b10100, ROTR = 5'b10101, BC = 5'b10110, BAUX = 5'b10111,          
               BPAR = 5'b11000, COMPARE = 5'b11001;
 
-    always @(*) begin
+    always @(*)
+    begin
+    if(reset)
+    begin
+        HALTED = 1'bz;
+        loadPC = 1'bz;
+        address = 6'bz;
+        rd_data = 16'bz;
+        input_length = 1'bz;
+        r_w_reg = 1'bz;
+        r_w_mem = 1'bz;
+        mem_data_in = 8'bz;
+    end
+    else begin
         HALTED <= 0;
         input_length = 1'b0;
         loadPC = 1'b0;  
@@ -117,5 +131,6 @@ module write_back (
             end
             default: ;
         endcase
+        end
     end
 endmodule
