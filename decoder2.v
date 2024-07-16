@@ -1,5 +1,6 @@
-module Decoder(instruction, opcode,addressing_mode,rd,rs1,rs2,data_mem,instruction_mem,s_r_amount);
+module Decoder(instruction, opcode,addressing_mode,rd,rs1,rs2,data_mem,instruction_mem,s_r_amount,rst);
 input [15:0]instruction;
+input rst;
 output reg [4:0]opcode; 
 output reg addressing_mode;
 output reg [2:0]rd;
@@ -26,6 +27,7 @@ always @(*) begin
     s_r_amount = 3'bzzz;
     opcode = instruction[15:11];
     addressing_mode = instruction[10];
+    if(~rst) begin
         case (opcode)
             MOVE: 
                 begin 
@@ -90,6 +92,7 @@ always @(*) begin
                     instruction_mem = 6'bzzzzzz;
                     s_r_amount=3'bzzz;
                 end
-        endcase       
+        endcase 
+    end
     end    
 endmodule
