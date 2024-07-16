@@ -103,7 +103,7 @@ module pipeline_processor(
         .mem_data_in(mem_data_in_wire), // data to be saved in mem
         .mem_addr_in(EX_WB_mem_addr),// addr_in for address where data to be saved 
         .mem_addr_out(ID_EX_data_mem),// addr_out for address from where data is collected for output.
-        .r_w(r_w_mem_wire),
+        .r_w(r_w_mem_wire)
 //        .enable(),
 //        .reset(),
 //       .clk()

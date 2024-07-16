@@ -47,9 +47,14 @@ end
 
     always @(*) 
 begin
-    if(reset)
+    if(reset == 1)
     begin
-        result <= 16'b0;
+        result = 16'bz;
+        zero_flag = 1'bz;
+        carry_flag = 1'bz;
+        ac_flag = 1'bz;
+        parity_flag = 1'bz;
+        mux_1_out = 3'bz;
     end
     else
         begin
@@ -221,6 +226,11 @@ begin
     end
 
     // updating zero_flag
+    if(reset)
+    zero_flag <= 1'bz;
+
+    else
+    begin
     if(opcode == 5'b00011)
     begin
         if(result == 0)
@@ -238,6 +248,7 @@ begin
             end
         else 
             zero_flag <= 0;
+    end
     end
 
     // updating carry_flag during the operation
@@ -261,6 +272,11 @@ begin
     end
 
     // updating parity_flag
+    if(reset)
+    parity_flag <= 1'bz;
+
+    else
+    begin
     if(opcode == 5'b00011)
     begin
         parity_flag = 0;
@@ -286,6 +302,7 @@ begin
         begin
             parity_flag = parity_flag^result[i];
         end
+    end
     end
 
 end
