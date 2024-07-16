@@ -18,6 +18,16 @@ output reg [5:0]ID_EX_instruction_mem;
 output reg [2:0]ID_EX_s_r_amount;
 
 always @ (*) begin
+    if (rst) begin
+        ID_EX_opcode = 4'bzzzz;
+        ID_EX_addressing_mode = 1'bz;
+        ID_EX_rd = 3'bz;
+        ID_EX_rs1 = 3'bz;
+        ID_EX_rs2 = 3'bz;
+        ID_EX_data_mem = 4'bz;
+        ID_EX_instruction_mem = 6'bz;
+        ID_EX_s_r_amount = 3'bz;
+    end
     if(clk) begin
         ID_EX_opcode = IF_ID_opcode;
         ID_EX_addressing_mode = IF_ID_addressing_mode;
