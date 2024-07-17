@@ -20,7 +20,8 @@ module write_back (
     output reg input_length,
     output reg r_w_reg,
     output reg r_w_mem,
-    output reg [7:0] mem_data_in // data to be saved in memory
+    output reg [7:0] mem_data_in, // data to be saved in memory
+    output reg flush_pipeline
 
 );
     reg r_w;
@@ -41,13 +42,14 @@ module write_back (
     if(reset)
     begin
         HALTED = 1'bz;
-        loadPC = 1'bz;
+        loadPC = 1'b0;
         address = 6'bz;
         rd_data = 16'bz;
         input_length = 1'bz;
         r_w_reg = 1'bz;
         r_w_mem = 1'bz;
         mem_data_in = 8'bz;
+        flush_pipeline = 1'b0;
     end
     else begin
         HALTED <= 0;
@@ -108,23 +110,38 @@ module write_back (
             end
             JUMP: begin
                 address <= instr_mem_addr;
+                flush_pipeline <= 1'b1;
                 loadPC = 1'b1;
+                #2;
+                flush_pipeline = 1'b0;
             end 
             BEQZ: if(zero_flag) begin
                 address <= instr_mem_addr;
+                flush_pipeline <= 1'b1;
                 loadPC = 1'b1;
+                #2;
+                flush_pipeline = 1'b0;
             end
             BC: if(carry_flag) begin
                 address <= instr_mem_addr;
+                flush_pipeline <= 1'b1;
                 loadPC = 1'b1;
+                #2;
+                flush_pipeline = 1'b0;
             end
             BAUX: if(auxiliary_flag) begin
                 address <= instr_mem_addr;
+                flush_pipeline <= 1'b1;
                 loadPC = 1'b1;
+                #2;
+                flush_pipeline = 1'b0;
             end
             BPAR: if(parity_flag) begin
                 address <= instr_mem_addr;
+                flush_pipeline <= 1'b1;
                 loadPC = 1'b1;
+                #2;
+                flush_pipeline = 1'b0;
             end    
             HALT: begin
                 HALTED <= 1'b1;

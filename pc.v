@@ -11,14 +11,17 @@ module pc(
 reg [5:0] temp;
 
 always @(*) begin
-    if (loadPC) begin
+    if (loadPC == 1) begin
         temp = address;
     end 
-    else if (incPC) begin
+    else if (incPC == 1) begin
         temp = temp + 6'b000001;
     end 
-    else if (reset) begin
+    else if (reset == 1) begin
         temp = 6'b000000;
+    end
+    else
+    begin
     end
     execadd = temp;
 end

@@ -10,8 +10,8 @@ reg [15:0] instrmem [0:63];  // Memory with 32 locations of 16 bits each
 
 always @(posedge reset or posedge enable or pc) begin
     if (reset)
-        instruction <= 16'b0;
-    else if (enable)
+    $readmemb("instruct.txt", instrmem); 
+    if (enable)
         instruction <= instrmem[pc];
 end
 
