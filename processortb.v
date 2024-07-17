@@ -24,11 +24,11 @@ module tb ();
     initial begin
         #10;
         controller_enable <= 1'b1;
-        #500;
-        resume = 1;
-        #50;
-        resume = 0;
-        #1000;
+        // #500;
+        // resume = 1;
+        // #50;
+        // resume = 0;
+        #5000;
         controller_enable<= 1'b0;
         #100
         for (i = 0; i < 8; i = i + 1) begin

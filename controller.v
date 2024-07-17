@@ -1,5 +1,6 @@
 `timescale 1ns/1ps
 module controller (
+    input flush_detected,
     input internal_clock,
     input halted,
     input resume,
@@ -57,13 +58,14 @@ always @(posedge internal_clock) begin
                 clk1 <= 0;
                 clk2 <= 0;
                 state <= S1;
-                flush <= 1'b1; // Flush the pipeline
+                // flush <= 1'b1; // Flush the pipeline
+                flush <= 1'b0;
             end
             S1: begin 
                 enable <= 1;
                 reset <= 1;
                 state <= S2;
-                flush <= 1'b0;
+                // flush <= 1'b0;
             end
             S2: begin
                 if (internal_halted)
@@ -88,21 +90,32 @@ always @(posedge internal_clock) begin
                     state <= S0;
                     internal_halted <= 0;
                     internal_restart <= 0;
-                    flush <= 1'b1; // Flush the pipeline
+                    // flush <= 1'b1; // Flush the pipeline
                 end
             end
             default: begin
                 state <= S0;
                 internal_halted <= 1'b0;
                 internal_restart <= 1'b0;
-                flush <= 1'b1; // Flush the pipeline
+                // flush <= 1'b1; // Flush the pipeline
             end
         endcase
-    end else begin
+    end 
+    else begin
         clk1 <= 0;
         clk2 <= 0;
-        flush <= 1'b0; // Ensure flush is de-asserted when controller is not enabled
+        // flush <= 1'b0; // Ensure flush is de-asserted when controller is not enabled
     end
+end
+always @(flush_detected) begin
+    if(flush_detected)
+    begin
+        flush = 1'b1;
+        #5;
+        flush = 1'b0;
+    end
+    else
+    flush = 0; 
 end
 
 endmodule

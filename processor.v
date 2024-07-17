@@ -21,7 +21,7 @@ module pipeline_processor(
     input controller_enable
 );
     reg r_w_clock, main_clk_reg;
-    wire clk1, clk2, rst, enable, loadPC_wire, temp_wire, input_length_wire, HALTED, flush;
+    wire clk1, clk2, rst, enable, loadPC_wire, temp_wire, input_length_wire, HALTED, flush,flush_detected;
     wire [7:0] rs2_data_wire, operand_1, mem_data_wire, mem_data_in_wire;
     wire [5:0] address_wire, execadd_wire;
     // Wires for Instruction Fetch Stage
@@ -122,13 +122,14 @@ module pipeline_processor(
         .resume(resume),
         .restart(restart),
         .controller_enable(controller_enable),
-        .flush(flush)
+        .flush(flush),
+        .flush_detected(flush_detected)
     );
     
     // Instruction Fetch Stage
     instfetch IF_stage(
         .clk(clk2),
-        .reset(rst | flush),
+        .reset(rst),
         .instruction(IF_instruction),
         .temp(temp_wire),
         .execadd(execadd_wire)
@@ -150,6 +151,7 @@ module pipeline_processor(
         .rd(ID_rd),
         .rs1(ID_rs1),
         .rs2(ID_rs2),
+        .rst(rst | flush),
         .data_mem(ID_data_mem),
         .instruction_mem(ID_instruction_mem),
         .s_r_amount(ID_s_r_amount)
@@ -193,7 +195,7 @@ module pipeline_processor(
         .instr_mem_addr(ID_EX_instruction_mem),
         .s_r_amount(ID_EX_s_r_amount),
         .enable(~HALTED),
-        .reset(rst),
+        .reset(rst | flush),
         .rs2_data(rs2_data_wire),
         .operand_1(operand_1),
         .mux_1_out(mux_1_out_wire),
@@ -203,7 +205,7 @@ module pipeline_processor(
     // EX/WB Latch
     latch_ex_wb EX_WB_latch(
         .clk(clk1),
-        .rst(rst | flush),
+        .rst(rst),
         .ID_EX_opcode(ID_EX_opcode),
         .ID_EX_am(ID_EX_addressing_mode),
         .ID_EX_rd(ID_EX_rd),
@@ -231,6 +233,7 @@ module pipeline_processor(
         .opcode(EX_WB_opcode),
         .am(EX_WB_am),
         .rd(EX_WB_rd),
+        .reset(rst),
         .mem_addr(EX_WB_mem_addr),
         .instr_mem_addr(EX_WB_instr_mem_addr),
         .clk(clk2),
@@ -246,7 +249,8 @@ module pipeline_processor(
         .input_length(input_length_wire),
         .r_w_reg(r_w_reg_wire),
         .mem_data_in(mem_data_in_wire),
-        .r_w_mem(r_w_mem_wire)
+        .r_w_mem(r_w_mem_wire),
+        .flush_pipeline(flush_detected)
     );
 
 endmodule
