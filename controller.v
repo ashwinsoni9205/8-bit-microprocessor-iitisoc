@@ -27,15 +27,15 @@ always @(restart or halted) begin
     if (halted == 1)
         internal_halted <= 1;
     else
-        internal_halted <= 0;
+        internal_halted <= internal_halted;
 end
 
 always @(posedge internal_clock) begin
     if (controller_enable) begin
-        if (state == S2 && halted == 1'b1) begin
-            internal_halted <= halted;
+        if (state == S2 && internal_halted == 1'b1) begin
             state <= S3;
-        end else
+        end 
+        else
             state <= S2;
 
         if (internal_restart == 1'b1) begin
@@ -58,29 +58,71 @@ always @(posedge internal_clock) begin
                 clk1 <= 0;
                 clk2 <= 0;
                 state <= S1;
-                // flush <= 1'b1; // Flush the pipeline
                 flush <= 1'b0;
             end
             S1: begin 
                 enable <= 1;
                 reset <= 1;
                 state <= S2;
-                // flush <= 1'b0;
             end
             S2: begin
                 if (internal_halted)
+                    begin
                     state <= S3;
-                else begin
+                    clk1 <= 0;
+                    clk2 <= 0;
+                    end
+                else 
+                begin
                     reset <= 0;
+
+                    if (internal_halted)
+                    begin
+                    state <= S3;
+                    clk1 <= 0;
+                    clk2 <= 0;
+                    end
+                    else
+                    begin
                     clk1 <= 1'b1;
                     clk2 <= 1'b0;
+                    end
+
                     #10;
+
+                    if (internal_halted)
+                    begin
+                    state <= S3;
+                    clk1 <= 0;
+                    clk2 <= 0;
+                    end
+                    else
                     clk1 <= 1'b0;
+
                     #10;
+
+                    if (internal_halted)
+                    begin
+                    state <= S3;
+                    clk1 <= 0;
+                    clk2 <= 0;
+                    end
+                    else
                     clk2 <= 1'b1;
+
                     #10;
+
+                    if (internal_halted)
+                    begin
+                    state <= S3;
+                    clk1 <= 0;
+                    clk2 <= 0;
+                    end
+                    else
                     clk2 <= 1'b0;
+
                     #10;
+
                 end
             end
             S3: begin
@@ -90,21 +132,18 @@ always @(posedge internal_clock) begin
                     state <= S0;
                     internal_halted <= 0;
                     internal_restart <= 0;
-                    // flush <= 1'b1; // Flush the pipeline
                 end
             end
             default: begin
                 state <= S0;
                 internal_halted <= 1'b0;
                 internal_restart <= 1'b0;
-                // flush <= 1'b1; // Flush the pipeline
             end
         endcase
     end 
     else begin
         clk1 <= 0;
         clk2 <= 0;
-        // flush <= 1'b0; // Ensure flush is de-asserted when controller is not enabled
     end
 end
 always @(flush_detected) begin
