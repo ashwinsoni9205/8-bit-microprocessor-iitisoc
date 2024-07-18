@@ -175,9 +175,15 @@ begin
                 5'b10011 : begin
                     result[15:8] <= 8'bx;
                     if(am == 0)
-                    {result[7:0],carry_flag} <= operand_1[7:0] >> s_r_amount;  
-                    else                    
-                    {result[7:0],carry_flag} <= operand_2[7:0] >> s_r_amount;  
+                    begin
+                        carry_flag = operand_1[0];
+                        result[7:0] <= operand_1[7:0] >> s_r_amount; 
+                    end 
+                    else         
+                    begin
+                        carry_flag = operand_1[0];           
+                        result[7:0] <= operand_2[7:0] >> s_r_amount;  
+                    end
                     end // logical shift right
 
                 5'b10100 : begin
