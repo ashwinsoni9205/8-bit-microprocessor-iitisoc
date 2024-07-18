@@ -176,12 +176,12 @@ begin
                     result[15:8] <= 8'bx;
                     if(am == 0)
                     begin
-                        carry_flag = operand_1[0];
+                        carry_flag <= operand_1[s_r_amount - 1];
                         result[7:0] <= operand_1[7:0] >> s_r_amount; 
                     end 
                     else         
                     begin
-                        carry_flag = operand_1[0];           
+                        carry_flag <= operand_1[s_r_amount - 1];           
                         result[7:0] <= operand_2[7:0] >> s_r_amount;  
                     end
                     end // logical shift right
