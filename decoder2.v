@@ -36,7 +36,7 @@ always @(*) begin
                         rs1 = instruction[6:4];
                     end else begin
                         rd = instruction[9:7];
-                        data_mem = instruction[7:4];
+                        data_mem = instruction[6:3];
                     end
                 end
             ADD,SUB,MUL,DIV,AND,OR,XOR,COMPARE:
@@ -62,7 +62,7 @@ always @(*) begin
             LOAD:
                 begin
                     rd = instruction[9:7];
-                    data_mem = instruction[7:4];
+                    data_mem = instruction[6:3];
                 end
             STORE:
                 begin
@@ -80,7 +80,7 @@ always @(*) begin
                         s_r_amount = instruction[6:4];
                     end else begin
                         data_mem = instruction[9:6];
-                        s_r_amount = instruction[6:4];
+                        s_r_amount = instruction[5:3];
                     end
                 end
             default: 
