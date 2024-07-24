@@ -62,31 +62,30 @@ The microprocessor supports a variety of operations through its 16-bit instructi
 ### Datapath
 The microprocessor's datapath includes the following stages:
 1. **Instruction Fetch (IF):** Fetches the instruction from memory.
-2. **Instruction Decode (ID):** Decodes the fetched instruction to determine the operation and operands.
+2. **Instruction Decode (ID):** Decodes the fetched instruction to determine the operation ,operands,destination registor and etc.
 3. **Execute (EX):** Performs the required operation on the operands.
-4. **Writeback (WB):** Writes the result back to the register file or memory.
+4. **Writeback (WB):** Writes the result back to the register file or memory as per opcode.
 
 ### Hazards and Mitigation Methods
 
 #### Hazards
 Pipelining introduces several types of hazards, which can impede the smooth execution of instructions:
-- **Data Hazards:** Occur when an instruction depends on the result of a previous instruction that is not yet complete.
-- **Control Hazards:** Occur due to branch instructions that change the flow of execution.
-- **Structural Hazards:** Occur when two or more instructions require the same hardware resource simultaneously.
+1. **Data Hazards:** Occur when an instruction depends on the result of a previous instruction that is not yet complete.
+ - **RAW hazard:** A Read After Write (RAW) hazard occurs when an instruction attempts to read a register before a preceding instruction has finished writing to that register. This can lead to the reading instruction obtaining an incorrect or stale value, affecting the correctness of the program.
+ - **WAR hazard:** A Write After Read (WAR) hazard occurs when an instruction writes to a register before a preceding instruction has finished reading from that register. This can lead to the previous instruction reading an incorrect value or the write operation causing unintended side effects.
+ - **WAW hazard:** A Write After Write (WAW) hazard occurs when two instructions write to the same register in a pipeline, and the order of writes can affect the final value of that register. If the second write completes before the first write, the final value written to the register might be incorrect.
+2. **Control Hazards:** Occur due to jump or branch instructions that change the flow of execution.
+3. **Structural Hazards:** Occur when two or more instructions require the same hardware resource simultaneously.
 
 #### Mitigation Methods
 
 1. **Data Hazards Mitigation:**
-   - **Forwarding:** Utilized to resolve data hazards by routing the output of one pipeline stage directly to a previous stage that needs it. This ensures that instructions can use the most recent data without waiting for it to be written back to the register file.
-   - **Stalling:** Implemented when forwarding cannot resolve the hazard. This introduces NOP (no operation) instructions into the pipeline to wait for the required data to be available.
+   - **RAW hazard:** The Read After Write (RAW) hazard is mitigated by making the pipeline stages level-triggered. This ensures that if the register value changes in the middle of execution, the result in the stages gets updated accordingly.
+   - **WAR hazard:** Write After Read (WAR) hazards do not occur in this processor because of sequential flow of instruction in the pipeline, which means that if instruction 1 is in the pipeline before instruction 2 then instruction 1 will write the regFile and memoryBank first then only instruction 2 can write it so, no chances of these files being written by any instruction occuring after the present instruction.
+   - **WAW hazard:** Write After Write (WAW) hazards do not occur in this processor as data is written in register bank and memory only in the writeback stage which takes one instruction at a time so no two instruction can write the registers and memory simultaneously.
 
 2. **Control Hazards Mitigation:**
-   - **Branch Prediction:** Simple static prediction where branches are assumed to be not taken. This allows the pipeline to fetch the next sequential instruction.
-   - **Flushing the Pipeline:** When a branch is taken, the instructions in the pipeline fetched after the branch are invalidated. This ensures that incorrect instructions do not execute.
+   - **Pipeline Flushing:** Implemented pipeline flushing to mitigate control hazard, the jump and branch instructions with true condition sends signal to controller from writeback stage to flush the pipeline, controller then resets the IF_ID_Latch, Decode stage, ID_EX_Latch, Execute stage and EX_WB_Latch to flush the wrong instructions from the pipeline.
 
 3. **Structural Hazards Mitigation:**
-   - **Resource Duplication:** Ensuring that sufficient resources are available to handle multiple instructions. For example, separate instruction and data memories help in avoiding conflicts.
-
-### Pipeline Flushing
-
-To handle branching, a method is used to detect branching using the Program Counter (PC). An additional register stores the address of the next instruction. If this address differs from the expected next instruction address, a branch is detected, and the pipeline is flushed. This ensures that no incorrect instructions proceed through the pipeline stages.
+   - **Isolation of read and write signals:** Mitigated the structural hazard caused by regFile and memoryBank by isolating the read and write signals from each other. In our processor the read operation is done only in execute stage and write operation in writeback stage, both the stages works at different clock signals, so we enable read signal only when execute stage is given clock and write signal is enabled when writeback stage is given clock and instruction that require write operation is present in writeback stage. 
