@@ -59,7 +59,7 @@ The microprocessor supports a variety of operations through its 16-bit instructi
 | 11000  | BRANCH (PARITY FLAG)     |
 | 11111  | HALT                     |
 
-### Data format
+### Instruction format
 1. **MOVE:**
 - **AM = 0:**
   
@@ -70,6 +70,40 @@ The microprocessor supports a variety of operations through its 16-bit instructi
   
 |opcode(5)|1|rd(3)|mem_add(4)|000|
 |---------|-|-----|----------|---|
+
+
+2. **ADD,SUB,MUL,DIV,AND,OR,XOR,COMP:**
+- **AM = 0:**
+  
+|opcode(5)|0|rd(3)|rs1(3)|rs2(3)|0|
+|---------|-|-----|------|------|-|
+
+- **AM = 1:**
+  
+|opcode(5)|1|rd(3)|rs1(3)|mem_add(4)|
+|---------|-|-----|------|----------|
+
+
+3. **INCR,DEC,NOT,all shift and rotate:**
+- **AM = 0:**
+  
+|opcode(5)|0|rd(3)|s_r_amount(3)|0000|
+|---------|-|-----|-------------|----|
+
+- **AM = 1:**
+  
+|opcode(5)|1|data_mem(4)|s_r_amount(3)|000|
+|---------|-|-----------|------------|----|
+
+4. **LOAD(mem -> reg):**
+  
+|opcode(5)|X|rd(3)|data_mem(4)|000|
+|---------|-|-----|-----------|---|
+
+5. **LOAD(reg -> mem):**
+  
+|opcode(5)|X|data_mem(4)|rd(3)|000|
+|---------|-|-----------|-----|---|
 
 
 ### Datapath
