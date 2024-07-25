@@ -146,3 +146,6 @@ Pipelining introduces several types of hazards, which can impede the smooth exec
 
 3. **Structural Hazards Mitigation:**
    - **Isolation of read and write signals:** Mitigated the structural hazard caused by regFile and memoryBank by isolating the read and write signals from each other. In our processor the read operation is done only in execute stage and write operation in writeback stage, both the stages works at different clock signals, so we enable read signal only when execute stage is given clock and write signal is enabled when writeback stage is given clock and instruction that require write operation is present in writeback stage. 
+
+
+![image](https://github.com/user-attachments/assets/bfed9f1b-2f5f-49e6-80b0-80f921aa26f1)
