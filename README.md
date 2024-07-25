@@ -59,6 +59,19 @@ The microprocessor supports a variety of operations through its 16-bit instructi
 | 11000  | BRANCH (PARITY FLAG)     |
 | 11111  | HALT                     |
 
+### Data format
+1. **MOVE:**
+- **AM = 0:**
+  
+|opcode(5)|0|rd(3)|rs(3)|0000|
+|---------|-|-----|-----|----|
+
+- **AM = 1:**
+  
+|opcode(5)|1|rd(3)|mem_add(4)|000|
+|---------|-|-----|----------|---|
+
+
 ### Datapath
 The microprocessor's datapath includes the following stages:
 1. **Instruction Fetch (IF):** Fetches the instruction from memory.
