@@ -105,6 +105,16 @@ The microprocessor supports a variety of operations through its 16-bit instructi
 |opcode(5)|X|data_mem(4)|rd(3)|000|
 |---------|-|-----------|-----|---|
 
+6. **JUMP AND BRANCH:**
+  
+|opcode(5)|X|instr_mem(6)|0000|
+|---------|-|------------|----|
+
+6. **HALT:**
+  
+|opcode(5)|X|0000000000|
+|---------|-|----------|
+
 
 ### Datapath
 The microprocessor's datapath includes the following stages:
