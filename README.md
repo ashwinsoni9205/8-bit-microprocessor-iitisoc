@@ -4,11 +4,6 @@
 ## Overview
 This project involves designing an 8-bit microprocessor using Verilog HDL. The microprocessor is optimized using a 4-stage pipelining process and supports a 16-bit instruction set. This README provides an overview of the microprocessor's specifications, architecture, and operational details.
 
-### Team Members
-- Ashwin Soni
-- S.V. Jaya Chand
-- Yash Baghel
-- Sanidhya Baheti
 
 ### Specifications
 - **Data Width:** 8 bits
@@ -157,3 +152,8 @@ Pipelining introduces several types of hazards, which can impede the smooth exec
 ![image](https://github.com/user-attachments/assets/3b0ac896-0e73-4762-9dcf-f95de5607c14)
 
 
+### Team Members
+- Ashwin Soni(https://github.com/ashwinsoni9205)
+- S.V. Jaya Chand(https://github.com/Jay1chand)
+- Yash Baghel(https://github.com/shadowchaser004)
+- Sanidhya Baheti(https://github.com/SanidhyaBaheti)
