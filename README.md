@@ -189,6 +189,45 @@ The microprocessor's datapath includes the following stages:
 
 ![image](https://github.com/user-attachments/assets/3b0ac896-0e73-4762-9dcf-f95de5607c14)
 
+The control system manages the following states:
+
+1. S0: Initial State (Everything off)
+   
+2. S1: Reset State
+
+3. S2: Clock Signal State
+ 
+4. S3: Halt State
+
+## State Descriptions
+
+### S0: Initial State
+- Description: Everything is off.
+- Purpose: Represents the initial state where the microprocessor and all its components are turned off.
+- Actions: No operations are performed; the system is in standby mode.
+
+### S1: Reset State
+- Description: Reset all stages and enable all pipeline latches.
+- Purpose: Prepares the microprocessor for operation.
+- Actions: Resets all pipeline stages and enables pipeline latches.
+
+### S2: Clock Signal State
+- Description: Clock signals to latches will be sent.
+- Purpose: Sends clock signals to synchronize operations across different stages.
+- Actions: Distributes clock signals to latches and checks the Halt signal.
+
+### S3: Halt State
+- Description: Halt = 1
+- Purpose: Pauses microprocessor operations when the Halt signal is set.
+- Actions: Halts operations and waits for an external interrupt or resume signal.
+
+## State Transitions
+
+- S0 to S1: Microprocessor is turned on or initialized.
+- S1 to S2: After resetting stages and enabling latches.
+- S2 to S3: If the Halt signal is set to 1.
+- S3 to S1: If a resume interrupt is received.
+
 
 ## Hazards and Mitigation Methods
 
