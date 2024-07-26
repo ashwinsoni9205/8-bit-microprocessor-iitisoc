@@ -6,6 +6,7 @@ This project involves designing an 8-bit microprocessor using Verilog HDL. The m
 
 
 ### Specifications
+- **Architecture:** Harvard Architecture
 - **Data Width:** 8 bits
 - **Instruction Width:** 16 bits
 - **Instruction Memory:** 64 x 16 bits
@@ -109,6 +110,47 @@ The microprocessor supports a variety of operations through its 16-bit instructi
   
 |opcode(5)|X|0000000000|
 |---------|-|----------|
+
+## Modules
+
+### pc.v
+- **Description**: This module increments the program counter after each instruction fetch, enabling sequential instruction execution and branching when needed.
+
+### regFile.v
+- **Description**: This module supports reading from and writing to multiple registers simultaneously, essential for efficient instruction execution.
+
+### memoryBank.v
+- **Description**: This module interfaces with both the data memory and the control unit to handle memory read/write operations during the execute and memory access stages.
+
+### instmem.v
+- **Description**: This module stores the program's instructions and supports fast access to facilitate the instruction fetch stage.
+
+### instfetch.v
+- **Description**: This module fetches instructions from instruction memory based on the program counter, passing them to the decode stage.
+
+### decoder2.v
+- **Description**: This module decodes the fetched instructions, determining the operation type and identifying the required operands and control signals.
+
+### executestage.v
+- **Description**: This module performs the actual computation, utilizing the arithmetic logic unit (ALU) and handling operations like addition, subtraction, logical operations, and branching.
+
+### write_back.v
+- **Description**: This module takes the results from the execute stage or memory access stage and writes them back to the appropriate register in the register file.
+
+### Latch_IF_ID.v
+- **Description**: This module holds the fetched instruction and corresponding control signals between the instruction fetch and decode stages, ensuring smooth transition and synchronization in the pipeline.
+
+ ### Latch_IF_ID.v
+- **Description**: This module holds the fetched instruction and corresponding control signals between the instruction fetch and decode stages, ensuring smooth transition and synchronization in the pipeline.
+
+### EX_WB_Latch.v
+- **Description**: This module temporarily holds data and control signals between the execution stage and the write-back stage, maintaining pipeline flow and data integrity.
+
+### controller.v
+- **Description**: This module generates control signals based on the decoded instruction, ensuring the correct operation of each pipeline stage and coordinating hazard detection and resolution.
+
+### processor.v
+- **Description**: This top-level module integrates all the individual components, orchestrating their interactions to ensure smooth data flow and control signal propagation across the pipeline.
 
 
 ### Datapath
