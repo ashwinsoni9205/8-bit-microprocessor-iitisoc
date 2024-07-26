@@ -5,7 +5,7 @@
 This project involves designing an 8-bit microprocessor using Verilog HDL. The microprocessor is optimized using a 4-stage pipelining process and supports a 16-bit instruction set. This README provides an overview of the microprocessor's specifications, architecture, and operational details.
 
 
-### Specifications
+## Specifications
 - **Architecture:** Harvard Architecture
 - **Data Width:** 8 bits
 - **Instruction Width:** 16 bits
@@ -14,17 +14,17 @@ This project involves designing an 8-bit microprocessor using Verilog HDL. The m
 - **Register File:** 8 x 8 bits
 - **Program Counter:** 6 bits
 
-### Addressing Modes
+## Addressing Modes
 - Register Direct Addressing
 - Absolute Addressing
 
-### Pipelining Stages
+## Pipelining Stages
 1. Instruction Fetch (IF)
 2. Instruction Decode (ID)
 3. Execute (EX)
 4. Writeback (WB)
 
-### Instruction Set
+## Instruction Set
 The microprocessor supports a variety of operations through its 16-bit instructions. Below are the opcodes for different operations:
 
 | Opcode | Operation                |
@@ -55,7 +55,7 @@ The microprocessor supports a variety of operations through its 16-bit instructi
 | 11000  | BRANCH (PARITY FLAG)     |
 | 11111  | HALT                     |
 
-### Instruction format
+## Instruction format
 1. **MOVE:**
 - **AM = 0:**
   
@@ -138,13 +138,13 @@ The microprocessor supports a variety of operations through its 16-bit instructi
 - **Description**: This module takes the results from the execute stage or memory access stage and writes them back to the appropriate register in the register file.
 
 ### Latch_IF_ID.v
-- **Description**: This module holds the fetched instruction and corresponding control signals between the instruction fetch and decode stages, ensuring smooth transition and synchronization in the pipeline.
+- **Description**: This module holds the fetched instruction between the instruction fetch and decode stages, ensuring smooth transition and synchronization in the pipeline.
 
- ### Latch_IF_ID.v
-- **Description**: This module holds the fetched instruction and corresponding control signals between the instruction fetch and decode stages, ensuring smooth transition and synchronization in the pipeline.
+### latch_ID_EX.v
+- **Description**: This module stores data between the instruction decode and execute stages, ensuring smooth transition and synchronization in the pipeline.
 
 ### EX_WB_Latch.v
-- **Description**: This module temporarily holds data and control signals between the execution stage and the write-back stage, maintaining pipeline flow and data integrity.
+- **Description**: This module temporarily holds data between the execution stage and the write-back stage, maintaining pipeline flow and data integrity.
 
 ### controller.v
 - **Description**: This module generates control signals based on the decoded instruction, ensuring the correct operation of each pipeline stage and coordinating hazard detection and resolution.
@@ -153,16 +153,42 @@ The microprocessor supports a variety of operations through its 16-bit instructi
 - **Description**: This top-level module integrates all the individual components, orchestrating their interactions to ensure smooth data flow and control signal propagation across the pipeline.
 
 
-### Datapath
+## Datapath
 The microprocessor's datapath includes the following stages:
-1. **Instruction Fetch (IF):** Fetches the instruction from memory.
-2. **Instruction Decode (ID):** Decodes the fetched instruction to determine the operation ,operands,destination registor and etc.
-3. **Execute (EX):** Performs the required operation on the operands.
-4. **Writeback (WB):** Writes the result back to the register file or memory as per opcode.
+### Pipeline Stages
 
-### Hazards and Mitigation Methods
+### Instruction Fetch (IF)
 
-#### Hazards
+- Fetches the instruction from memory.
+- This stage retrieves the instruction located at the address specified by the program counter (PC). The PC is then incremented to point to the next instruction. This stage is crucial for ensuring that instructions are sequentially accessed and prepared for decoding.
+
+### Instruction Decode (ID)
+
+-  Decodes the fetched instruction to determine the operation, operands, destination register,memory address,addressing mode etc..
+-  In this stage, the fetched instruction is decoded to identify the opcode, which specifies the operation to be performed. It also determines the source operands and the destination register. 
+
+### Execute (EX)
+
+- Performs the required operation on the operands.
+-  This stage utilizes the arithmetic logic unit (ALU) to execute arithmetic and logical operations on the source operands. It also calculates memory addresses for load and store instructions and evaluates branch conditions. The results of these operations are then prepared for the next stage.
+
+### Writeback (WB)
+
+-  Writes the result back to the register file or memory as per opcode.
+- In this final stage, the results of the execution stage are written back to the destination register specified during the decode stage. If the instruction involves memory operations, the data is written to or read from the memory. This stage ensures that the results of the executed instruction are properly stored and made available for future instructions.
+  
+
+![image](https://github.com/user-attachments/assets/03f5b45f-9851-4da5-be68-b43159fcd261)
+
+
+### Controller FSM
+
+![image](https://github.com/user-attachments/assets/3b0ac896-0e73-4762-9dcf-f95de5607c14)
+
+
+## Hazards and Mitigation Methods
+
+### Hazards
 Pipelining introduces several types of hazards, which can impede the smooth execution of instructions:
 1. **Data Hazards:** Occur when an instruction depends on the result of a previous instruction that is not yet complete.
  - **RAW hazard:** A Read After Write (RAW) hazard occurs when an instruction attempts to read a register before a preceding instruction has finished writing to that register. This can lead to the reading instruction obtaining an incorrect or stale value, affecting the correctness of the program.
@@ -171,7 +197,7 @@ Pipelining introduces several types of hazards, which can impede the smooth exec
 2. **Control Hazards:** Occur due to jump or branch instructions that change the flow of execution.
 3. **Structural Hazards:** Occur when two or more instructions require the same hardware resource simultaneously.
 
-#### Mitigation Methods
+### Mitigation Methods
 
 1. **Data Hazards Mitigation:**
    - **RAW hazard:** The Read After Write (RAW) hazard is mitigated by making the pipeline stages level-triggered. This ensures that if the register value changes in the middle of execution, the result in the stages gets updated accordingly.
@@ -184,14 +210,10 @@ Pipelining introduces several types of hazards, which can impede the smooth exec
 3. **Structural Hazards Mitigation:**
    - **Isolation of read and write signals:** Mitigated the structural hazard caused by regFile and memoryBank by isolating the read and write signals from each other. In our processor the read operation is done only in execute stage and write operation in writeback stage, both the stages works at different clock signals, so we enable read signal only when execute stage is given clock and write signal is enabled when writeback stage is given clock and instruction that require write operation is present in writeback stage. 
 
-### Datapath
-
-![image](https://github.com/user-attachments/assets/760b0a9e-a187-49cf-a351-74c11d96a282)
 
 
-### Controller FSM
 
-![image](https://github.com/user-attachments/assets/3b0ac896-0e73-4762-9dcf-f95de5607c14)
+
 
 
 ### Team Members
