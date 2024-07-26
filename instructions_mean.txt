@@ -1,0 +1,35 @@
+Instructions:
+
+This file is to understand the total 16 bit binary address format of the assembly codes.
+
+The instructions and their definitions are as follows:
+
+0000100010100110 (R type, ADD Rd(001), R1(010), R2(011))  
+0000111000010010 (I type, ADD Rd(100), R1(001), M1(0010))
+1001101110010000 (R type, LSR R1(111), SR amnt(001))
+1011000010000000 (R type, BRCF, I8(001000))
+1111100000000000 (HALT)
+1111100000000000 (HALT)
+1111100000000000 (HALT)
+1111100000000000 (HALT)
+1001101110010000 (R type, LSR Rd(111), SR amnt(001))
+1111100000000000 (HALT)
+
+The above are executed to understand the working of processor and its efforts to mitigate hazards as written between the parenthesis.
+
+0000001001011110 (R type, ADD Rd(100), R1(111), R2(101))
+0101001000101110 (R type, XOR Rd(100), R1(101), R2(110))
+0000111001010000 (I type, ADD Rd(100), R1(101), I(0000))
+
+The above are executed to understand the execution of Arthimetic, Logical operations operated on register address written between paranthesis.
+
+1000001110010000 (R type, ASL Rd(111), Sh amnt(001))
+1000011111001000 (I type, ASL Im(1111), Sh amnt(001))
+1001101110100000 (R type, LSR Rd(111), Sh amnt(100))
+1001111111010000 (I type, LSR Im(1111), Sh amnt(010))
+0001111101101111 (I type, MUL-CARRY)
+1001001110010000 (R type, LSL Rd(111), Sh amnt(001))
+1011000100010000 (I type, BC Rd(0010), Sh amnt(001))
+
+The above are executed to understand the execution of shift instructions, Carry flags operated simiarly as above.
+
