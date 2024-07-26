@@ -1,26 +1,30 @@
 `timescale 1ns/1ps
-module executestage (
-output  reg [15:0] result, // final output from stage;
-output reg zero_flag,carry_flag,ac_flag,parity_flag, // all flag registers,
+`include "memoryBank.v"
+`include "regFile.v"
+module executestage (result,zero_flag,carry_flag,ac_flag,parity_flag,opcode,
+am,rd,rs1,rs2,mem_addr,instr_mem_addr,s_r_amount,enable,reset,clk);
+output  reg [15:0] result; // final output from stage;
+output reg zero_flag,carry_flag,ac_flag,parity_flag; // all flag registers;
 
-input [4:0] opcode,
-input [2:0] s_r_amount,
-input am, // addressing mode,
-input enable,reset,clk,
-input [2:0] rd,rs1,rs2, // register addereses recieved from prev stages,
-input [3:0] mem_addr,
-input [5:0] instr_mem_addr, // memory addr. recieved from prev stages;
-input [7:0] rs2_data,operand_1,
-output reg[2:0] mux_1_out, // to decide from where the operand_1 will come;
-input [7:0] mem_data
-);
+input [4:0] opcode;
+input [2:0] s_r_amount;
+input am; // addressing mode;
+input enable,reset,clk;
+input [2:0] rd,rs1,rs2; // register addereses recieved from prev stages;
+input [3:0] mem_addr;
+input [5:0] instr_mem_addr; // memory addr. recieved from prev stages;
 
+wire [7:0] rs2_data,operand_1,mem_data;
+wire [15:0] rd_data;
 
 reg [7:0] operand_2;
-
+reg[2:0] mux_1_out; // to decide from where the operand_1 will come;
 reg [7:0] temp;
 
 integer i;
+
+regFile r1(operand_1,rs2_data,mux_1_out,rs2,rd,rd_data,1'b1,1'b0,1'bx);
+memoryBank m1(mem_data,8'b0,mem_addr,4'b0,1'b1,1'b0,clk);
 
 always @( *) begin
 
@@ -47,14 +51,9 @@ end
 
     always @(*) 
 begin
-    if(reset == 1)
+    if(reset)
     begin
-        result = 16'bz;
-        zero_flag = 1'bz;
-        carry_flag = 1'bz;
-        ac_flag = 1'bz;
-        parity_flag = 1'bz;
-        mux_1_out = 3'bz;
+        result <= 16'b0;
     end
     else
         begin
@@ -139,8 +138,8 @@ begin
                     result[15:0] <= 16'bx;
                     end // jump
 
-                5'b01110 | 5'b10110 | 5'b10111 | 5'b11000 : begin
-                    result[15:0] <= 16'bx;
+                5'b01110 || 5'b10110 || 5'b10111 || 5'b11000 : begin
+                    result[7:0] <= 8'bx;
                     end // branch
 
                 5'b10000 : begin
@@ -175,15 +174,9 @@ begin
                 5'b10011 : begin
                     result[15:8] <= 8'bx;
                     if(am == 0)
-                    begin
-                        carry_flag <= operand_1[s_r_amount - 1];
-                        result[7:0] <= operand_1[7:0] >> s_r_amount; 
-                    end 
-                    else         
-                    begin
-                        carry_flag <= operand_1[s_r_amount - 1];           
-                        result[7:0] <= operand_2[7:0] >> s_r_amount;  
-                    end
+                    {result[7:0],carry_flag} <= operand_1[7:0] >> s_r_amount;  
+                    else                    
+                    {result[7:0],carry_flag} <= operand_2[7:0] >> s_r_amount;  
                     end // logical shift right
 
                 5'b10100 : begin
@@ -218,7 +211,7 @@ begin
                     result[0] <= 0;
                 end // compare;
 
-                5'b11111 : result <= 8'bx; 
+                5'b11111 : result <= 8'bx;
                 default : begin
                      result <= 8'bx;
                     end // halt
@@ -232,11 +225,6 @@ begin
     end
 
     // updating zero_flag
-    if(reset)
-    zero_flag <= 1'bz;
-
-    else
-    begin
     if(opcode == 5'b00011)
     begin
         if(result == 0)
@@ -254,7 +242,6 @@ begin
             end
         else 
             zero_flag <= 0;
-    end
     end
 
     // updating carry_flag during the operation
@@ -278,11 +265,6 @@ begin
     end
 
     // updating parity_flag
-    if(reset)
-    parity_flag <= 1'bz;
-
-    else
-    begin
     if(opcode == 5'b00011)
     begin
         parity_flag = 0;
@@ -308,7 +290,6 @@ begin
         begin
             parity_flag = parity_flag^result[i];
         end
-    end
     end
 
 end
