@@ -2,11 +2,12 @@
 # 8-bit Microprocessor with 16-bit Instruction Set and 4-Stage Pipelining
 
 ## Overview
-This project involves designing an 8-bit microprocessor using Verilog HDL. The microprocessor is optimized using a 4-stage pipelining process and supports a 16-bit instruction set. This README provides an overview of the microprocessor's specifications, architecture, and operational details.
+This project involves designing an 8-bit microprocessor using Verilog HDL, optimized with a 4-stage pipeline and a 16-bit instruction set. The microprocessor features a Harvard architecture and RISC design, offering an efficient execution of instructions through stages: Instruction Fetch (IF), Instruction Decode (ID), Execute (EX), and Writeback (WB). With a data width of 8 bits and a clock frequency of 500MHz, the processor supports various addressing modes, including Register Direct and Absolute Addressing, and a wide range of operations such as arithmetic, logical, and control instructions. The project includes detailed modules for each stage, a robust hazard mitigation strategy to handle data, control, and structural hazards, and comprehensive testing to ensure functionality and efficiency. By integrating all components, the microprocessor ensures smooth data flow and control signal propagation across the pipeline, making it a versatile and powerful processor design.
 
 
 ## Specifications
-- **Architecture:** Harvard Architecture
+- **Memory-Architecture:** Harvard Architecture
+- **Microprocessor-Architecture:** RISC
 - **Data Width:** 8 bits
 - **Instruction Width:** 16 bits
 - **Instruction Memory:** 64 x 16 bits
