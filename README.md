@@ -149,7 +149,8 @@ Pipelining introduces several types of hazards, which can impede the smooth exec
 
 ##DATAPATH
 
-![WhatsApp Image 2024-07-02 at 10 12 28_a4350699](https://github.com/user-attachments/assets/ecf1aa20-ce71-41a2-8bdf-fb705b54e1cc)
+![image](https://github.com/user-attachments/assets/760b0a9e-a187-49cf-a351-74c11d96a282)
+
 
 ##CONTROLLER FSM
 
