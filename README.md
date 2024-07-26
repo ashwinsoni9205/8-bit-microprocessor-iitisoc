@@ -13,6 +13,7 @@ This project involves designing an 8-bit microprocessor using Verilog HDL. The m
 - **Data Memory:** 16 x 8 bits
 - **Register File:** 8 x 8 bits
 - **Program Counter:** 6 bits
+- **Clock Frequency:** 500MHz
 
 ## Addressing Modes
 - Register Direct Addressing
@@ -56,6 +57,7 @@ The microprocessor supports a variety of operations through its 16-bit instructi
 | 11111  | HALT                     |
 
 ## Instruction format
+### R Type:
 1. **MOVE:**
 - **AM = 0:**
   
@@ -101,12 +103,14 @@ The microprocessor supports a variety of operations through its 16-bit instructi
 |opcode(5)|X|data_mem(4)|rd(3)|000|
 |---------|-|-----------|-----|---|
 
-6. **JUMP AND BRANCH:**
+### J Type:
+
+ **JUMP AND BRANCH:**
   
 |opcode(5)|X|instr_mem(6)|0000|
 |---------|-|------------|----|
 
-6. **HALT:**
+ **HALT:**
   
 |opcode(5)|X|0000000000|
 |---------|-|----------|
