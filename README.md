@@ -255,12 +255,47 @@ Pipelining introduces several types of hazards, which can impede the smooth exec
    - **Isolation of read and write signals:** Mitigated the structural hazard caused by regFile and memoryBank by isolating the read and write signals from each other. In our processor the read operation is done only in execute stage and write operation in writeback stage, both the stages works at different clock signals, so we enable read signal only when execute stage is given clock and write signal is enabled when writeback stage is given clock and instruction that require write operation is present in writeback stage. 
 
 
-### VERILOG Schematics: 
+### VERILOG Schematic: 
 ![WhatsApp Image 2024-07-26 at 13 11 06_f6d0554b](https://github.com/user-attachments/assets/b565e76d-bcaa-4505-85f8-187ac01a5718)
 
 
+### Simulation results:
+The total format has been clearly described in the file named instrmean.txt in the same repo. These are the output waveforms observed correspondingly.
+
+- ** Hazard Detection ** 
+0000100010100110
+0000111000010010
+1001101110010000
+1011000010000000
+1111100000000000
+1111100000000000
+1111100000000000
+1111100000000000
+1001101110010000
+1111100000000000
 
 
+
+![WhatsApp Image 2024-07-26 at 12 55 00_59a9a6ca](https://github.com/user-attachments/assets/9d995306-227b-4828-8e5b-ffb80325e223)
+
+- ** Arthimetic and logical operations **
+
+0000001001011110 
+0101001000101110 
+0000111001010000
+
+
+- ** Shift, Flag Instructions **
+
+1000001110010000
+1000011111001000 
+1001101110100000
+1001111111010000
+0001111101101111
+1001001110010000
+1011000100010000
+
+- ** Jump Instructions **:
 
 
 
