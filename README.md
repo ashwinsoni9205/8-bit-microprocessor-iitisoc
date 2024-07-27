@@ -329,6 +329,7 @@ The total format has been clearly described in the file named instrmean.txt in t
 
 
 **Jump Instructions**:
+|----------------|
 |0000001011000000|
 |0000001111010000|
 |0101101101110000|
