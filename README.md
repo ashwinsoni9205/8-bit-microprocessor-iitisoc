@@ -310,7 +310,7 @@ The total format has been clearly described in the file named instrmean.txt in t
 
 ![WhatsApp Image 2024-07-27 at 10 38 50_78aedb63](https://github.com/user-attachments/assets/eb753964-ee59-43ff-b537-71a7c5b97be9)
 
-**Shift, Flag Instructions**
+**Shift and Flag Instructions**
 |----------------|
 |1000001110010000|
 |1000011111001000| 
@@ -319,6 +319,11 @@ The total format has been clearly described in the file named instrmean.txt in t
 |0001111101101111|
 |1001001110010000|
 |1011000100010000|
+
+![WhatsApp Image 2024-07-27 at 10 49 13_7578ca82](https://github.com/user-attachments/assets/4d2b36b9-92aa-40d6-8095-8abf6aaf0615)
+
+![WhatsApp Image 2024-07-27 at 10 49 46_e594a9f7](https://github.com/user-attachments/assets/f976fd20-fdad-4bd6-867d-c76d1357b158)
+
 
 **Jump Instructions**:
 
