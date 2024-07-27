@@ -26,6 +26,25 @@ This project involves designing an 8-bit microprocessor using Verilog HDL, optim
 3. Execute (EX)
 4. Writeback (WB)
 
+# GETTING STARTED
+
+## Prerequesites
+
+Please install Icarus Verilog (Iverilog- commonly used in interface with vscode to code and simulate in verilog ) along with gtkwave (used for waveform simulation and analysis) in your system to begin with. 
+Icarus verilog is available at : [https://bleyer.org/icarus/](https://bleyer.org/icarus/)
+Further interface your VSCODE with run time environment (if it's not default from environment variables in the settings).
+Install necessary extensions for verilog formatting into VS CODE from [https://marketplace.visualstudio.com/items?itemName=mshr-h.VerilogHDL](https://marketplace.visualstudio.com/items?itemName=mshr-h.VerilogHDL)
+
+## Setup Instructions
+
+Run the following in the terminal of VS CODE
+
+```
+iverilog -o processor.vvp processortb.v
+vvp processor.vvp
+gtkwave
+```
+
 ## Instruction Set
 The microprocessor supports a variety of operations through its 16-bit instructions. Below are the opcodes for different operations:
 
@@ -255,7 +274,9 @@ Pipelining introduces several types of hazards, which can impede the smooth exec
    - **Isolation of read and write signals:** Mitigated the structural hazard caused by regFile and memoryBank by isolating the read and write signals from each other. In our processor the read operation is done only in execute stage and write operation in writeback stage, both the stages works at different clock signals, so we enable read signal only when execute stage is given clock and write signal is enabled when writeback stage is given clock and instruction that require write operation is present in writeback stage. 
 
 
+
 ### VERILOG Schematic: 
+
 ![WhatsApp Image 2024-07-26 at 13 11 06_f6d0554b](https://github.com/user-attachments/assets/b565e76d-bcaa-4505-85f8-187ac01a5718)
 
 
@@ -277,6 +298,7 @@ The total format has been clearly described in the file named instrmean.txt in t
 
 
 
+
 ![WhatsApp Image 2024-07-26 at 12 55 00_59a9a6ca](https://github.com/user-attachments/assets/9d995306-227b-4828-8e5b-ffb80325e223)
 
 **Arthimetic and logical operations**
@@ -284,6 +306,7 @@ The total format has been clearly described in the file named instrmean.txt in t
 |0000001001011110| 
 |0101001000101110|
 |0000111001010000|
+
 
 ![WhatsApp Image 2024-07-27 at 10 38 50_78aedb63](https://github.com/user-attachments/assets/eb753964-ee59-43ff-b537-71a7c5b97be9)
 
