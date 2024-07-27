@@ -289,7 +289,7 @@ The total format has been clearly described in the file named instrmean.txt in t
 
 **Shift, Flag Instructions**
 
-|----------------|
+|-----------------|
 |1000001110010000|
 |1000011111001000| 
 |1001101110100000|
