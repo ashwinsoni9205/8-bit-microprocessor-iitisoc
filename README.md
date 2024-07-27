@@ -208,7 +208,7 @@ The microprocessor's datapath includes the following stages:
 ![image](https://github.com/user-attachments/assets/03f5b45f-9851-4da5-be68-b43159fcd261)
 
 
-### Controller FSM
+## Controller FSM
 
 ![image](https://github.com/user-attachments/assets/3b0ac896-0e73-4762-9dcf-f95de5607c14)
 
@@ -278,12 +278,12 @@ Pipelining introduces several types of hazards, which can impede the smooth exec
 
 
 
-### VERILOG Schematic: 
+## VERILOG Schematic: 
 
 ![WhatsApp Image 2024-07-26 at 13 11 06_f6d0554b](https://github.com/user-attachments/assets/b565e76d-bcaa-4505-85f8-187ac01a5718)
 
 
-### Simulation results:
+## Simulation results:
 The total format has been clearly described in the file named instrmean.txt in the same repo. These are the output waveforms observed correspondingly.
 
 **Hazard Detection** 
