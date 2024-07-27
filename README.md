@@ -330,7 +330,7 @@ The total format has been clearly described in the file named instrmean.txt in t
 
 
 ### Team Members
-- Ashwin Soni(https://github.com/ashwinsoni9205)
-- S.V. Jaya Chand(https://github.com/Jay1chand)
-- Yash Baghel(https://github.com/shadowchaser004)
-- Sanidhya Baheti(https://github.com/SanidhyaBaheti)
+- Ashwin Soni &emsp;(https://github.com/ashwinsoni9205)
+- S.V. Jaya Chand &emsp;(https://github.com/Jay1chand)
+- Yash Baghel &emsp;(https://github.com/shadowchaser004)
+- Sanidhya Baheti &emsp; (https://github.com/SanidhyaBaheti)) 
