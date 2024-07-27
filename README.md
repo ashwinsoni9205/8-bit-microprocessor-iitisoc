@@ -288,8 +288,7 @@ The total format has been clearly described in the file named instrmean.txt in t
 ![WhatsApp Image 2024-07-27 at 10 38 50_78aedb63](https://github.com/user-attachments/assets/eb753964-ee59-43ff-b537-71a7c5b97be9)
 
 **Shift, Flag Instructions**
-
-|-----------------|
+|----------------|
 |1000001110010000|
 |1000011111001000| 
 |1001101110100000|
