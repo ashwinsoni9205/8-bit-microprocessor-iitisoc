@@ -332,7 +332,6 @@ The total format has been clearly described in the file named instrmean.txt in t
 
 
 ## Team Members
-# Contributors
 
 - Ashwin Soni &emsp; [![GitHub](https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/ashwinsoni9205) &emsp; [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/ashwin-soni-099200262)
 - S.V. Jaya Chand &emsp; [![GitHub](https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/Jay1chand) &emsp; [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/s-v-jaya-chand-a32806257)
