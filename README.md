@@ -332,8 +332,8 @@ The total format has been clearly described in the file named instrmean.txt in t
 
 
 ## Team Members
-- Ashwin Soni &emsp; [<img src="https://img.icons8.com/ios-glyphs/30/000000/external-link.png" width="15"/>](https://github.com/ashwinsoni9205)
-- S.V. Jaya Chand &emsp; [<img src="https://img.icons8.com/ios-glyphs/30/000000/external-link.png" width="15"/>](https://github.com/Jay1chand)
-- Yash Baghel &emsp; [<img src="https://img.icons8.com/ios-glyphs/30/000000/external-link.png" width="15"/>](https://github.com/shadowchaser004)
-- Sanidhya Baheti &emsp; [<img src="https://img.icons8.com/ios-glyphs/30/000000/external-link.png" width="15"/>](https://github.com/SanidhyaBaheti)
+- Ashwin Soni &emsp; [![GitHub](https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/ashwinsoni9205)
+- S.V. Jaya Chand &emsp; [![GitHub](https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/Jay1chand)
+- Yash Baghel &emsp; [![GitHub](https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/shadowchaser004)
+- Sanidhya Baheti &emsp; [![GitHub](https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/SanidhyaBaheti)
 
