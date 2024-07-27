@@ -30,10 +30,11 @@ This project involves designing an 8-bit microprocessor using Verilog HDL, optim
 
 ## Prerequesites
 
-Please install Icarus Verilog (Iverilog- commonly used in interface with vscode to code and simulate in verilog ) along with gtkwave\ (used for waveform simulation and analysis) in your system to begin with.\
+Please install Icarus Verilog (Iverilog- commonly used in interface with vscode to code and simulate in verilog ) along with gtkwave\
+(used for waveform simulation and analysis) in your system to begin with.\
 Icarus verilog is available at : [https://bleyer.org/icarus/](https://bleyer.org/icarus/)\
 Further interface your VSCODE with run time environment (if it's not default from environment variables in the settings).\
-Install necessary extensions for verilog formatting into VS CODE from [https://marketplace.visualstudio.com/items?itemName=mshr-h.VerilogHDL](https://marketplace.visualstudio.com/items?itemName=mshr-h.VerilogHDL)\
+Install necessary extensions for verilog formatting into VS CODE from [https://marketplace.visualstudio.com/items?itemName=mshr-h.VerilogHDL](https://marketplace.visualstudio.com/items?itemName=mshr-h.VerilogHDL)
 
 ## Setup Instructions
 
