@@ -8,8 +8,8 @@ The project includes detailed modules for each stage, a robust hazard mitigation
 
 
 ## Specifications
-- **Memory-Architecture:** Harvard Architecture
 - **Microprocessor-Architecture:** RISC
+- **Memory-Architecture:** Harvard Architecture
 - **Data Width:** 8 bits
 - **Instruction Width:** 16 bits
 - **Instruction Memory:** 64 x 16 bits
