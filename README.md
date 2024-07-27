@@ -263,8 +263,8 @@ Pipelining introduces several types of hazards, which can impede the smooth exec
 The total format has been clearly described in the file named instrmean.txt in the same repo. These are the output waveforms observed correspondingly.
 
 **Hazard Detection** 
-|0000100010100110|
-|0000111000010010|
+| 0000100010100110 |
+| 0000111000010010 |
 |1001101110010000|
 |1011000010000000|
 |1111100000000000|
