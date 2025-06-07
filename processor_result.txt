@@ -1,0 +1,93 @@
+[Simulation Output:]
+2025-06-07 19:44:45
+WARNING: ./instmem.v:19: $readmemb(instruct.txt): Not enough words in the file for the requested range [0:63].
+VCD info: dumpfile processor.vcd opened for output.
+WARNING: ./instmem.v:13: $readmemb(instruct.txt): Not enough words in the file for the requested range [0:63].
+WARNING: ./instmem.v:13: $readmemb(instruct.txt): Not enough words in the file for the requested range [0:63].
+register: 00000000
+register: 00000101
+register: 00000010
+register: 00000011
+register: 00001111
+register: 00000101
+register: 00000110
+register: 00000001
+memory: 00001000
+memory: 00001001
+memory: 00001010
+memory: 00001011
+memory: 00001100
+memory: 00001101
+memory: 00001110
+memory: 00001111
+memory: 00010000
+memory: 00010001
+memory: 00010010
+memory: 00010011
+memory: 00010100
+memory: 00010101
+memory: 00010110
+memory: 00010111
+
+[Simulation Output:]
+2025-06-07 19:44:45
+WARNING: ./instmem.v:19: $readmemb(instruct.txt): Not enough words in the file for the requested range [0:63].
+VCD info: dumpfile processor.vcd opened for output.
+WARNING: ./instmem.v:13: $readmemb(instruct.txt): Not enough words in the file for the requested range [0:63].
+WARNING: ./instmem.v:13: $readmemb(instruct.txt): Not enough words in the file for the requested range [0:63].
+register: 00000000
+register: 00000001
+register: 00000010
+register: 00000011
+register: 00000100
+register: 00000100
+register: 00010110
+register: 00000100
+memory: 00001000
+memory: 00001001
+memory: 00001010
+memory: 00001011
+memory: 00001100
+memory: 00001101
+memory: 00001110
+memory: 00001111
+memory: 00010000
+memory: 00010001
+memory: 00010010
+memory: 00010011
+memory: 00010100
+memory: 00010101
+memory: 00010110
+memory: 00010111
+
+[Simulation Output:]
+2025-06-07 19:44:46
+WARNING: ./instmem.v:19: $readmemb(instruct.txt): Not enough words in the file for the requested range [0:63].
+VCD info: dumpfile processor.vcd opened for output.
+WARNING: ./instmem.v:13: $readmemb(instruct.txt): Not enough words in the file for the requested range [0:63].
+WARNING: ./instmem.v:13: $readmemb(instruct.txt): Not enough words in the file for the requested range [0:63].
+register: 00000000
+register: 00000001
+register: 00000010
+register: 00000011
+register: 00000100
+register: 00000101
+register: 00000000
+register: 10000100
+memory: 00001000
+memory: 00001001
+memory: 00001010
+memory: 00001011
+memory: 00001100
+memory: 00001101
+memory: 00001110
+memory: 00001111
+memory: 00010000
+memory: 00010001
+memory: 00010010
+memory: 00010011
+memory: 00010100
+memory: 00010101
+memory: 00010110
+memory: 00001011
+
