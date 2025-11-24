@@ -6,7 +6,7 @@ module instmem(
     input enable
 );
 
-reg [15:0] instrmem [0:63];  // Memory with 32 locations of 16 bits each
+    reg [15:0] instrmem [0:63];  // Memory with 64 locations of 16 bits each
 
 always @(posedge reset or posedge enable or pc) begin
     if (reset)
@@ -18,5 +18,6 @@ end
 initial begin
     $readmemb("instruct.txt", instrmem);  
 end
+
 
 endmodule
